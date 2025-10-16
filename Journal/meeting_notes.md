@@ -5,3 +5,9 @@ A template for your meeting notes:
 - Who: meeting attendees
 - Where: in-person or online
 - What: items discussed during the meeting
+
+Meeting 1:
+- When: 
+- Who: 
+- Where: 
+- What: 
