@@ -6,7 +6,16 @@ A template for your meeting notes:
 - Where: in-person or online
 - What: items discussed during the meeting
 
-Meeting 1:
+Meeting for sprint 1:
+- ** didn't end up meeting for first sprint **
+
+Meeting for sprint 2: 
+- When: 
+- Who: 
+- Where: 
+- What: 
+
+Meeting for sprint 1:
 - When: 
 - Who: 
 - Where: 
