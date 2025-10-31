@@ -15,8 +15,9 @@ Meeting for sprint 2:
 - Where: 
 - What: 
 
-Meeting for sprint 1:
-- When: 
-- Who: 
-- Where: 
-- What: 
+Meeting for sprint 3:
+- When: Fri, Oct 31
+- Who: Nikita, Lundon, Luke, Ricky
+- Where: discord (was supposed to be on zoom)
+- What: talk about progress and plannning for how to work on the project going forwards
+
