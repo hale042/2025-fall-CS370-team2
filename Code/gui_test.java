@@ -13,6 +13,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JComponent;
 import javax.swing.JCheckBox;
 import javax.swing.BorderFactory;
+import javax.swing.JScrollPane;
 // import javax.swing.;
 
 import java.awt.BorderLayout;
@@ -25,6 +26,8 @@ import java.awt.Image;
 // import java.awt.Image.SCALE_SMOOTH;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
+import java.awt.Font;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -275,6 +278,9 @@ class gui {
     }
     
     public static void appGUITest2() {
+        /*
+         * this is a gui test that uses the tabbed pane class of java swing
+        */
         // https://docs.oracle.com/javase/tutorial/uiswing/components/tabbedpane.html
         // https://docs.oracle.com/javase/tutorial/uiswing/examples/components/TabbedPaneDemoProject/src/components/TabbedPaneDemo.java
         // creating the frame
@@ -289,7 +295,7 @@ class gui {
         // frame.setSize(300, 300); // window size
         
         // fullscreen?
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         // frame.setUndecorated(true);
         
         // what function to run when the window is closed
@@ -313,7 +319,7 @@ class gui {
         tabbedPane.addTab("Search", null, searchTab, "Does twice as much nothing");
         // tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
         
-        JComponent recipeTab = makeTextPanel("Panel #2");
+        JComponent recipeTab = recipePanelTest();
         // tabbedPane.addTab("Tab 2", icon, panel2, "Does twice as much nothing");
         tabbedPane.addTab("Recipe", null, recipeTab, "Does twice as much nothing");
         // tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
@@ -348,6 +354,42 @@ class gui {
         panel.setLayout(new GridLayout(1, 1));
         panel.add(filler);
         return panel;
+    }
+
+    public static JComponent recipePanelTest() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(3, 1));
+        String sample_text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+        
+        // header
+        JPanel header = new JPanel();
+        // header.setLayout(new BorderLayout());
+        header.setLayout(new GridLayout(1, 1));
+        header.setBorder(BorderFactory.createEmptyBorder(5,10,5,10));
+        // header.setBackground(Color.BLUE);
+        
+        
+        
+        JLabel headerText = new JLabel(sample_text.substring(0,26), JLabel.LEFT);
+        // Font headerFont = new Font("Verdana", Font.PLAIN, 56);
+        Font headerFont = new Font("Verdana", Font.BOLD, 56);
+        headerText.setFont(headerFont);
+        header.add(headerText);
+        // header.add(BorderLayout.CENTER, headerText);
+        
+        
+        // body for recipe details
+        JPanel body = new JPanel();
+        body.setBorder(BorderFactory.createEmptyBorder(5,10,5,10));
+
+        body.add(new JLabel(sample_text, JLabel.CENTER));
+
+        panel.add(BorderLayout.NORTH, header);
+        panel.add(BorderLayout.NORTH, body);
+
+        JScrollPane scrollable = new JScrollPane(panel);
+        // return panel;
+        return scrollable;
     }
     
     public static JComponent searchPanelTest() {
