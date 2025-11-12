@@ -10,7 +10,7 @@ import java.util.List;
 public class DBTest {
     public static void main(String[] args) {
         Database_Manager db1 = new Database_Manager();
-        if(db1.fetchRecipeList() != null){
+        if(db1.fetchRecipeList().isEmpty()){
             Recipe recipe = new Recipe("oatmeal", Arrays.asList("oats", "walnuts", "banana"), "1. step 1\n2. step 2\n", "beginner", 30);
             db1.saveRecipe(recipe);
             Recipe recipe1 = new Recipe("banana bread", Arrays.asList("flour", "sugar", "walnuts", "banana"), "1. step 1\n2. step 2\n", "beginner", 20);
