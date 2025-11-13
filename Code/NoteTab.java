@@ -16,7 +16,7 @@ public class NoteTab extends TabFrameTemplate {
     private JTextArea noteContentsField;
     private JPanel notesListPanel, noteEditorPanel, noteControlsPanel, listButtons;
 
-    private Font pageFont = new Font("Segoe UI", Font.PLAIN, 13);
+    private Font pageFont = new Font("Segoe UI", Font.PLAIN, 15);
 
     private String savedNotes[] = {"Shopping List", "Sandwich Ideas", "Add-Ins For That One Salad", "Foods to try", "test5", "test6"};
     // private Note savedNotes[] = {new Note("Shopping List", ""), new Note("Sandwich Ideas", ""), new Note("Add-Ins For That One Salad", ""), new Note("Foods to try", ""), new Note("test5", ""), new Note("test6", "")};
@@ -79,6 +79,7 @@ public class NoteTab extends TabFrameTemplate {
         // contents
         noteContentsField = new JTextArea();
         // noteContentsField.setEditable(false);
+        noteContentsField.setFont(pageFont);
         noteEditorPanel.add(noteContentsField, BorderLayout.CENTER);
 
         // save, cancel, etc. buttons
@@ -103,11 +104,19 @@ public class NoteTab extends TabFrameTemplate {
     }
 
     public void saveNote() {
-        System.out.println("This is a test of the save function.");
+        // System.out.println("This is a test of the save function.");
+        String title = noteTitleField.getText();
+        String contents = noteContentsField.getText();
+
+        Note note = new Note(title, contents);
+        System.out.println(note.title + " - " + note.contents);
     }
 
     public void clearNote() {
-        System.out.println("This is a test of the clear function.");
+        // System.out.println("This is a test of the clear function.");
+
+        noteTitleField.setText("");
+        noteContentsField.setText("");
     }
 
     public void deleteNote() {
@@ -128,7 +137,7 @@ public class NoteTab extends TabFrameTemplate {
 
         public Note(String title, String contents) {
             this.title = title;
-            this.contents =contents;
+            this.contents = contents;
         }
     }
 }
