@@ -9,8 +9,6 @@ import java.util.*;
 //match recipes with users input
 
 
-
-/*
 public class main { //testing without api use
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -41,7 +39,7 @@ public class main { //testing without api use
         }
     }
 }
-
+/*
 public class Ingredient {
     private String name;
     

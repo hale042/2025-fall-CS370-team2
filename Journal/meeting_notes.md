@@ -21,4 +21,8 @@ Meeting for sprint 3:
 - Where: discord (was supposed to be on zoom)
 - What: talk about progress and plannning for how to work on the project going forwards
 
-Meeting for Sprint
+Meeting for Sprint:
+
+
+Meeting for Sprint:
+    
