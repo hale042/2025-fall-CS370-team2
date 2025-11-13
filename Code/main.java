@@ -1,16 +1,17 @@
 import javax.swing.JMenuItem; //add more
-import java.util.list;
+import java.util.List;
 import java.util.*;
 
 
-    //get ingredients from the user using text field
-    //integrate the api
-    //way to store the recipes (the name, ingredients, steps, difficulty rating)
-    //match recipes with users input
+//get ingredients from the user using text field
+//integrate the api
+//way to store the recipes (the name, ingredients, steps, difficulty rating)
+//match recipes with users input
 
 
 
-public class Main { //testing without api use
+/*
+public class main { //testing without api use
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         RecipeFinder finder = new RecipeFinder();
@@ -41,14 +42,13 @@ public class Main { //testing without api use
     }
 }
 
-
 public class Ingredient {
     private String name;
-
+    
     public Ingredient(String name) {
         this.name = name.toLowerCase();
     }
-
+    
     public String getName() {
         return name;
     }
@@ -64,11 +64,11 @@ public class Recipe {
         this.ingredients = ingredients;
         this.instructions = instructions;
     }
-
+    
     public String getName() {
         return name;
     }
-
+    
     public String getInstructions() {
         return instructions;
     }
@@ -78,17 +78,17 @@ import java.util.*;
 
 public class RecipeFinder {
     private List<Recipe> recipes = new ArrayList<>();
-
+    
     public void addRecipe(Recipe recipe) {
         recipes.add(recipe);
     }
-
+    
     public List<Recipe> findRecipes(List<String> availableIngredients) {
         List<Recipe> matched = new ArrayList<>();
-
+        
         for (Recipe recipe : recipes) {
             boolean canMake = recipe.getIngredients().stream()
-                    .allMatch(ing -> availableIngredients.contains(ing.getName()));
+            .allMatch(ing -> availableIngredients.contains(ing.getName()));
             if (canMake) {
                 matched.add(recipe);
             }
@@ -96,4 +96,4 @@ public class RecipeFinder {
         return matched;
     }
 }
-
+*/
