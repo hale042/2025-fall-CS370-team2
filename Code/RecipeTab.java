@@ -1,9 +1,12 @@
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Color;
+
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -34,11 +37,17 @@ public class RecipeTab extends TabFrameTemplate {
         
         // body / recipe contents
         body = new JPanel();
-        body.setLayout(new FlowLayout());
+        // body.setLayout(new FlowLayout());
+        // body.setLayout(new FlowLayout(FlowLayout.CENTER));
+        body.setLayout(new BoxLayout(body, BoxLayout.PAGE_AXIS));
         
         JPanel ingredientsPanel = new JPanel();
+        // ingredientsPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        ingredientsPanel.setLayout(new BoxLayout(ingredientsPanel, BoxLayout.PAGE_AXIS));
+        // ingredientsPanel.setBackground(Color.BLUE);
+        
         for (Ingredient currIngredient : currentRecipe.getIngredients()) {
-            JLabel ingredientLabel = new JLabel(currIngredient.getName() + " - " + currIngredient.getAmount() + "\n");
+            JLabel ingredientLabel = new JLabel(currIngredient.getName() + " - " + currIngredient.getAmount() + "\n", JLabel.CENTER);
             ingredientLabel.setFont(bodyFont);
             ingredientsPanel.add(ingredientLabel);
         }
@@ -46,12 +55,15 @@ public class RecipeTab extends TabFrameTemplate {
         body.add(ingredientsPanel);
         
         JPanel instructionsPanel = new JPanel();
-        // JLabel instructionsLabel = new JLabel(currentRecipe.getInstructions());
-        // JLabel instructionsLabel = new JLabel("<html><p>" + currentRecipe.getInstructions().replaceAll("\n", "<br>") + "</p></html>");
-        JLabel instructionsLabel = new JLabel(String.format(html, 1000, currentRecipe.getInstructions()));
-        instructionsLabel.setFont(bodyFont);
+        // instructionsPanel.setBackground(Color.BLUE);
 
-        body.add(instructionsLabel);
+        // instructionsPanel.setLayout(new BoxLayout(instructionsPanel, BoxLayout.Y_AXIS));
+        JLabel instructionsLabel = new JLabel(String.format(html, 1000, currentRecipe.getInstructions()), JLabel.CENTER);
+        instructionsLabel.setFont(bodyFont);
+        
+
+        instructionsPanel.add(instructionsLabel);
+        body.add(instructionsPanel);
         
         mainPanel.add(body, BorderLayout.CENTER);
     }
