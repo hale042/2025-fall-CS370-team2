@@ -1,4 +1,5 @@
 import java.awt.Dimension;
+
 import javax.swing.SwingUtilities;
 import javax.swing.JComponent;
 import javax.swing.JFrame;

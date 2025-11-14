@@ -37,8 +37,13 @@ public class RecipeTab extends TabFrameTemplate {
         body.setLayout(new FlowLayout());
         
         JPanel ingredientsPanel = new JPanel();
-        JLabel ingredientsLabel = new JLabel();
-        ingredientsLabel.setFont(bodyFont);
+        for (Ingredient currIngredient : currentRecipe.getIngredients()) {
+            JLabel ingredientLabel = new JLabel(currIngredient.getName() + " - " + currIngredient.getAmount() + "\n");
+            ingredientLabel.setFont(bodyFont);
+            ingredientsPanel.add(ingredientLabel);
+        }
+        // JLabel ingredientsLabel = new JLabel();
+        body.add(ingredientsPanel);
         
         JPanel instructionsPanel = new JPanel();
         // JLabel instructionsLabel = new JLabel(currentRecipe.getInstructions());
@@ -46,7 +51,6 @@ public class RecipeTab extends TabFrameTemplate {
         JLabel instructionsLabel = new JLabel(String.format(html, 1000, currentRecipe.getInstructions()));
         instructionsLabel.setFont(bodyFont);
 
-        body.add(ingredientsLabel);
         body.add(instructionsLabel);
         
         mainPanel.add(body, BorderLayout.CENTER);
@@ -55,7 +59,7 @@ public class RecipeTab extends TabFrameTemplate {
     public void viewRecipe(Recipe recipe) {
         this.currentRecipe = recipe;
 
-        System.out.println(this.currentRecipe.getName() + " - " + this.currentRecipe.getInstructions());
+        // System.out.println(this.currentRecipe.getName() + " - " + this.currentRecipe.getInstructions());
     }
 
     public void sampleRecipe() {
