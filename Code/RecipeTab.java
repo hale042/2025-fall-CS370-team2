@@ -1,8 +1,10 @@
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Color;
-
+import java.awt.Dimension;
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,17 +41,21 @@ public class RecipeTab extends TabFrameTemplate {
         body = new JPanel();
         // body.setLayout(new FlowLayout());
         // body.setLayout(new FlowLayout(FlowLayout.CENTER));
-        body.setLayout(new BoxLayout(body, BoxLayout.PAGE_AXIS));
+        // body.setLayout(new BoxLayout(body, BoxLayout.PAGE_AXIS));
+        body.setLayout(new GridLayout(2, 1));
         
         JPanel ingredientsPanel = new JPanel();
-        // ingredientsPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        ingredientsPanel.setLayout(new BoxLayout(ingredientsPanel, BoxLayout.PAGE_AXIS));
+        // ingredientsPanel.setLayout(new BorderLayout());
+        // ingredientsPanel.setLayout(new BoxLayout(ingredientsPanel, BoxLayout.PAGE_AXIS));
+        // ingredientsPanel.setLayout(new GridLayout(currentRecipe.getIngredients().size(), 1));
+        ingredientsPanel.setLayout(new GridLayout(0, 1));
         // ingredientsPanel.setBackground(Color.BLUE);
         
         for (Ingredient currIngredient : currentRecipe.getIngredients()) {
             JLabel ingredientLabel = new JLabel(currIngredient.getName() + " - " + currIngredient.getAmount() + "\n", JLabel.CENTER);
             ingredientLabel.setFont(bodyFont);
-            ingredientsPanel.add(ingredientLabel);
+            // ingredientsPanel.add(ingredientLabel);
+            ingredientsPanel.add(ingredientLabel, BorderLayout.CENTER);
         }
         // JLabel ingredientsLabel = new JLabel();
         body.add(ingredientsPanel);
@@ -70,11 +76,13 @@ public class RecipeTab extends TabFrameTemplate {
 
     public void viewRecipe(Recipe recipe) {
         this.currentRecipe = recipe;
+        mainPanel.revalidate();
 
         // System.out.println(this.currentRecipe.getName() + " - " + this.currentRecipe.getInstructions());
     }
 
     public void sampleRecipe() {
+        // source: https://www.inspiredtaste.net/38940/spaghetti-with-meat-sauce-recipe/
         String name = "Spaghetti";
         // List<Ingredient> ingredients = Arrays.asList(new Ingredient("water"), new Ingredient("dry spaghetti noodles"), new Ingredient("salt"), new Ingredient("Ground Meat"), new Ingredient("Tomatoes"));
         List<Ingredient> ingredients = Arrays.asList(new Ingredient("water"), new Ingredient("dry spaghetti noodles"), new Ingredient("salt"), new Ingredient("Ground Meat"), new Ingredient("Tomatoes"));
