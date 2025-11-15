@@ -1,4 +1,5 @@
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
@@ -38,7 +39,9 @@ public class NoteTab extends TabFrameTemplate {
         // JList<String> notesList = new JList<String>(savedNotes);
         setNoteList(savedNotes);
         notesList.setFont(pageFont);
-        notesListPanel.add(notesList, BorderLayout.CENTER);
+        // notesListPanel.add(notesList, BorderLayout.CENTER);
+        JScrollPane scrollablenotesList = new JScrollPane(notesList); // make it scrollable
+        notesListPanel.add(scrollablenotesList, BorderLayout.CENTER);
         
         // buttons for deleting, opening
         listButtons = new JPanel();
@@ -115,12 +118,18 @@ public class NoteTab extends TabFrameTemplate {
         if (currentNote.isEmpty()) {
             System.out.println("Empty Note");
         } else {
+            /* 
+                check if the note is already in the list(compare objects? compare titles?) before saving it
+                
+                can't get it to work? it keeps saying that the objects and even strings are not equal
+            */
             int foundNoteIndex = -1;
 
             for (int i = 0; i < savedNotes.size(); i++) {
-                // if(currentNote.equals(savedNotes.get(i)))
                 // System.out.println(savedNotes.get(i).title + " - " + currentNote.title);
-                System.out.println((currentNote.title == savedNotes.get(i).title));
+                // System.out.println((currentNote.title == savedNotes.get(i).title));
+                System.out.println((currentNote.title.length() == savedNotes.get(i).title.length()));
+                // if(currentNote.equals(savedNotes.get(i))) {
                 if(currentNote.title == savedNotes.get(i).title) {
                     foundNoteIndex = i;
                 }

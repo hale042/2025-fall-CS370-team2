@@ -23,5 +23,6 @@ public class Note {
 
         Note noteObj = (Note) obj;
         return (title == noteObj.title) && (contents == noteObj.contents);
+        // return (title == noteObj.title);
     }
 }
