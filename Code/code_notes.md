@@ -15,3 +15,8 @@ This folder is for your project source code.
         fix the search page layout
             make elements fill the pane
             shift everything so it is in the right spots(search bar on top, filters on left, results in the middle(?) of the screen)
+
+11/12 - GUI
+    R - made changes to the way the search tab was implemented so it works with the tab style ui
+            made new TabFrameTemplate superclass for the tabs
+            worked on the notes tab

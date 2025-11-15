@@ -1,8 +1,9 @@
-import java.util.*;
+import java.util.List;
 
 public class Recipe {
     private String name;
     private List<Ingredient> ingredients;
+    // private String instructions;
     private String instructions;
     private String skillLevel;
     private int cookTime; // in minutes
