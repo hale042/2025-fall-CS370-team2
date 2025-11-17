@@ -85,7 +85,7 @@ public class Database_Manager {
         return recipes;
     }
 
-    public List<Recipe> fetchRecipeList(List<String> ingredients){
+    public List<Recipe> fetchRecipeList(List<String> ingredients, String skill, String time){
         List<Recipe> recipes = new ArrayList<>();
         Statement statement = null;
         ResultSet resultSet = null;
@@ -93,8 +93,20 @@ public class Database_Manager {
             Class.forName("org.sqlite.JDBC");
             statement = connection.createStatement();
             StringBuilder sb = new StringBuilder("SELECT * FROM " + table + " WHERE ");
-            for(String i : ingredients) sb.append("ingredients LIKE '%" + i + "%' AND ");
-            sb.delete(sb.length() - 5, sb.length());
+            for(String i : ingredients) sb.append("ingredients LIKE '%").append(i).append("%' AND ");
+            if (!skill.equalsIgnoreCase("any skill")) {
+                sb.append("skill LIKE '%").append(skill).append("%' AND ");
+            }
+
+            if(time.equalsIgnoreCase("under 30")) {
+                sb.append("time < 30");
+
+            } else if (time.equalsIgnoreCase("30-60")) {
+                sb.append("time >= 30 AND time <= 60");
+            } else if (time.equalsIgnoreCase("over 60")) {
+                sb.append("time > 60");
+            } else { sb.delete(sb.length() - 5, sb.length()); }
+
             resultSet = statement.executeQuery(sb.toString());
 
             while (resultSet.next()) {
