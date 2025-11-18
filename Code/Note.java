@@ -8,7 +8,8 @@ public class Note {
     }
 
     public boolean isEmpty() {
-        return (title == null && contents == null) || (title == "" && contents == "");
+        // return (title == null && contents == null) || (title == "" && contents == "");
+        return (title.isBlank() && contents.isBlank());
     }
 
     @Override
@@ -22,7 +23,8 @@ public class Note {
         }
 
         Note noteObj = (Note) obj;
-        return (title == noteObj.title) && (contents == noteObj.contents);
+        // return (title == noteObj.title) && (contents == noteObj.contents);
+        return (noteObj.title.equals(title)) && (noteObj.contents.equals(contents));
         // return (title == noteObj.title);
     }
 }

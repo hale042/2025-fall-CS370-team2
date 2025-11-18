@@ -29,7 +29,7 @@ public class NoteTab extends TabFrameTemplate {
 
     @Override
     public void initializeTabContents() {
-        this.mainPanel.setLayout(new BorderLayout(10, 10));
+        mainPanel.setLayout(new BorderLayout(10, 10));
         
         // list of notes to view
         notesListPanel = new JPanel();
@@ -56,7 +56,7 @@ public class NoteTab extends TabFrameTemplate {
 
         notesListPanel.add(listButtons, BorderLayout.SOUTH);
         
-        this.mainPanel.add(notesListPanel, BorderLayout.WEST);
+        mainPanel.add(notesListPanel, BorderLayout.WEST);
         
         // note editing/viewing interface
         noteEditorPanel = new JPanel();
@@ -86,7 +86,7 @@ public class NoteTab extends TabFrameTemplate {
         
         noteEditorPanel.add(noteControlsPanel, BorderLayout.SOUTH);
         
-        this.mainPanel.add(noteEditorPanel, BorderLayout.CENTER);
+        mainPanel.add(noteEditorPanel, BorderLayout.CENTER);
 
         // binding the buttons to actions
         saveButton.addActionListener(e -> saveNote());
@@ -97,6 +97,8 @@ public class NoteTab extends TabFrameTemplate {
     }
 
     public void setNoteList(ArrayList<Note> Notes) {
+        savedNotes = Notes;
+        // take in an arraylist of notes, put their titles in a list display it on the page
         ArrayList<String> temp = new ArrayList<>();
         for (Note note : Notes) {
             temp.add(note.title);
@@ -113,49 +115,49 @@ public class NoteTab extends TabFrameTemplate {
         String contents = noteContentsField.getText();
 
         currentNote = new Note(title, contents);
-        System.out.println(currentNote.title + " - " + currentNote.contents);
+        // System.out.println(currentNote.title + " - " + currentNote.contents);
 
         if (currentNote.isEmpty()) {
             System.out.println("Empty Note");
         } else {
-            
+            // System.out.println(currentNote.title + " - " + currentNote.title.length());
+
             /* 
                 check if the note is already in the list(compare objects? compare titles?) before saving it
                 
                 can't get it to work? it keeps saying that the objects and even strings are not equal
             */
             int foundNoteIndex = -1;
-
             for (int i = 0; i < savedNotes.size(); i++) {
-                // System.out.println(savedNotes.get(i).title + " - " + currentNote.title);
-                // System.out.println((currentNote.title == savedNotes.get(i).title));
-                System.out.println((currentNote.title.length() == savedNotes.get(i).title.length()));
+                System.out.println(savedNotes.get(i).title + " - " + currentNote.title);
                 // if(currentNote.equals(savedNotes.get(i))) {
-                if(currentNote.title == savedNotes.get(i).title) {
+                if(currentNote.title.equals(savedNotes.get(i).title)) {
                     foundNoteIndex = i;
                 }
             }
     
-            if (foundNoteIndex == -1) {
+            if (foundNoteIndex == -1) { // if we didn't find a note with the same name, save the note
                 savedNotes.add(currentNote);
                 setNoteList(savedNotes);
             }
-            else {
+            // else if (!currentNote.contents.equals(savedNotes.get(foundNoteIndex).contents)) {
+            //     // if we found a note with the same name, but different contents, save with number added
+            // }
+            else { // if we find a note with the same name, overwrite its contents with the current one
                 savedNotes.set(foundNoteIndex, currentNote);
             }
         }
     }
 
     public void clearNote() {
-        // System.out.println("This is a test of the clear function.");
-
+        // set the note fields to an empty string
         noteTitleField.setText("");
         noteContentsField.setText("");
         currentNote = new Note("", "");
     }
 
     public void deleteNote() {
-        // System.out.println("This is a test of the delete note function.");
+        // delete the note selected from the list and update the displayed list
         int noteIndex = notesList.getSelectedIndex();
         String noteTitle = (String) notesList.getSelectedValue();
         System.out.println("Selected note index: " + noteIndex + " and title: " + noteTitle);
