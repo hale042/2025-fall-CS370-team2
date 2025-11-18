@@ -9,18 +9,15 @@ import java.util.List;
 public class DBTest {
     public static void main(String[] args) {
         Database_Manager db1 = new Database_Manager();
-        if(db1.fetchRecipeList().isEmpty()){
-            Recipe recipe = new Recipe("oatmeal", Arrays.asList("oats", "walnuts", "banana"), "1. step 1\n2. step 2\n", "beginner", 30);
-            db1.saveRecipe(recipe);
-            Recipe recipe1 = new Recipe("banana bread", Arrays.asList("flour", "sugar", "walnuts", "banana"), "1. step 1\n2. step 2\n", "beginner", 20);
-            db1.saveRecipe(recipe1);
-            Recipe recipe2 = new Recipe("bread", Arrays.asList("flour", "sugar", "baking_powder"), "1. step 1\n2. step 2\n", "beginner", 20);
-            db1.saveRecipe(recipe2);
-            Recipe recipe3 = new Recipe("apple pie", Arrays.asList("flour", "sugar", "apple", "butter"), "1. step 1\n2. step 2\n", "intermediate", 90);
-            db1.saveRecipe(recipe3);
-            System.out.println("Database Updated");
 
-        }
+        Recipe recipe = new Recipe("oatmeal", Arrays.asList("oats", "walnuts", "banana"), "1. step 1\n2. step 2\n", "beginner", 30);
+        db1.saveRecipe(recipe);
+        Recipe recipe1 = new Recipe("banana bread", Arrays.asList("flour", "sugar", "walnuts", "banana"), "1. step 1\n2. step 2\n", "beginner", 20);
+        db1.saveRecipe(recipe1);
+        Recipe recipe2 = new Recipe("bread", Arrays.asList("flour", "sugar", "baking_powder"), "1. step 1\n2. step 2\n", "beginner", 20);
+        db1.saveRecipe(recipe2);
+        Recipe recipe3 = new Recipe("apple pie", Arrays.asList("flour", "sugar", "apple", "butter"), "1. step 1\n2. step 2\n", "intermediate", 90);
+        db1.saveRecipe(recipe3);
 
         List<Recipe> recipeList = db1.fetchRecipeList();
         for(Recipe r : recipeList) System.out.println(r.getName());

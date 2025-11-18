@@ -29,7 +29,8 @@ public class Database_Manager {
                     "ingredients TEXT," +
                     "instructions TEXT," +
                     "skill TEXT," +
-                    "time INTEGER)";
+                    "time INTEGER," +
+                    "UNIQUE(name))";
             statement.executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -117,7 +118,7 @@ public class Database_Manager {
                 String skillLevel = resultSet.getString("skill");
                 int cookTime = resultSet.getInt("time");
 
-                List<String> ingredientsList = new ArrayList<>(List.of(ingredients_string.split(" ")));
+                List<String> ingredientsList = this.ingredientsToList(ingredients_string);
                 Recipe recipe = new Recipe(name, ingredientsList, instructions, skillLevel, cookTime);
 
                 recipes.add(recipe);
@@ -145,10 +146,11 @@ public class Database_Manager {
 
         try {
 
-            String sql = "INSERT INTO " + table + " (name, ingredients, instructions, skill, time) VALUES (?,?,?,?,?)";
+
+            String sql = "INSERT OR IGNORE INTO " + table + " (name, ingredients, instructions, skill, time) VALUES (?,?,?,?,?)";
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, recipe.getName());
-            preparedStatement.setString(2, recipe.ingredientsToString());
+            preparedStatement.setString(2, this.ingredientsToString(recipe.getIngredients()));
             preparedStatement.setString(3, recipe.getInstructions());
             preparedStatement.setString(4, recipe.getSkillLevel());
             preparedStatement.setInt(5, recipe.getCookTime());
@@ -165,5 +167,19 @@ public class Database_Manager {
             }
         }
         return true;
+    }
+
+    private List<String> ingredientsToList(String ingredients) {
+        List<String> list = new ArrayList<>(List.of(ingredients.split(" ")));
+        for(String ing : list) ing = ing.replaceAll("_", " ");
+        return list;
+    }
+    private String ingredientsToString(List<String> ingredients) {
+        StringBuilder sb = new StringBuilder();
+        for (String ing : ingredients) {
+            ing = ing.replaceAll(" ", "_");
+            sb.append(ing).append(" ");
+        }
+        return sb.toString();
     }
 }
