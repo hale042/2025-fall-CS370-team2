@@ -4,6 +4,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -27,14 +28,21 @@ import java.util.List;
 import java.io.File;
 
 public class SearchTab extends TabFrameTemplate {
+    final private int NEWRECIPETABINDEX = 4;
+
+    private CookItGUI mainGUI;
     private JTextField ingredientField;
     private JComboBox<String> skillFilter;
     private JComboBox<String> timeFilter;
     private JTextArea resultArea;
-    private JButton searchButton, clearButton, viewButton, addImageButton;
+    private JButton searchButton, clearButton, viewButton, addImageButton, newRecipeButton;
     private JLabel imageLabel;
     private RecipeFinder finder;
     private Recipe selectedRecipe;
+
+    public SearchTab(CookItGUI mainGUI) {
+        this.mainGUI = mainGUI;
+    }
 
     @Override
     public void initializeTabContents() {
@@ -89,12 +97,15 @@ public class SearchTab extends TabFrameTemplate {
         imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
         imageLabel.setPreferredSize(new Dimension(200, 200));
         imageLabel.setBorder(new LineBorder(Color.GRAY));
-
+        newRecipeButton = new JButton("New Recipe");
+        
         rightPanel.add(viewButton);
         rightPanel.add(Box.createVerticalStrut(10));
         rightPanel.add(addImageButton);
         rightPanel.add(Box.createVerticalStrut(10));
         rightPanel.add(imageLabel);
+        rightPanel.add(Box.createVerticalStrut(10));
+        rightPanel.add(newRecipeButton);
 
         this.mainPanel.add(rightPanel, BorderLayout.EAST);
 
@@ -103,6 +114,7 @@ public class SearchTab extends TabFrameTemplate {
         clearButton.addActionListener(e -> clearSearch());
         viewButton.addActionListener(e -> showRecipeDetails());
         addImageButton.addActionListener(e -> chooseImage());
+        newRecipeButton.addActionListener(e -> openNewRecipeTab());
 
         // pack();
         // setLocationRelativeTo(null);
@@ -208,14 +220,18 @@ public class SearchTab extends TabFrameTemplate {
         }
     }
 
-    public static void main(String args[]) {
-        SearchTab gui = new SearchTab();
+    private void openNewRecipeTab() {
+        mainGUI.switchTab(NEWRECIPETABINDEX);
+    }
 
-        //Schedule a job for the event-dispatching thread("Swing data structures aren't thread-safe")
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                System.out.println(gui.getAsPanel());
-            }
-        });
+    public static void main(String args[]) {
+        // SearchTab gui = new SearchTab();
+
+        // //Schedule a job for the event-dispatching thread("Swing data structures aren't thread-safe")
+        // javax.swing.SwingUtilities.invokeLater(new Runnable() {
+        //     public void run() {
+        //         System.out.println(gui.getAsPanel());
+        //     }
+        // });
     }
 }
