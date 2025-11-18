@@ -24,3 +24,10 @@ This folder is for your project source code.
 11/12 - GUI
     R - worked on note tab(also a bit on the recipe tab the day prior)
         haven't been able to get the saveNote() function work; im having problems with checking if the note is already in the list of saved notes
+
+11/17 - GUI
+    R - basically done with the note tab
+        just need to work with backend to make the interface
+
+        gonna try to work on the new recipe interface
+        also gotta finish the recipe page
