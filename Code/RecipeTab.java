@@ -50,6 +50,7 @@ public class RecipeTab extends TabFrameTemplate {
         // ingredientsPanel.setLayout(new GridLayout(currentRecipe.getIngredients().size(), 1));
         ingredientsPanel.setLayout(new GridLayout(0, 1));
         // ingredientsPanel.setBackground(Color.BLUE);
+        ingredientsPanel.add(new JLabel("Ingredients: "));
         
         for (Ingredient currIngredient : currentRecipe.getIngredients()) {
             JLabel ingredientLabel = new JLabel(currIngredient.getName() + " - " + currIngredient.getAmount() + "\n", JLabel.CENTER);
