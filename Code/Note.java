@@ -1,6 +1,6 @@
 public class Note {
-    public String title = "";
-    public String contents = "";
+    public String title = null;
+    public String contents = null;
 
     public Note(String title, String contents) {
         this.title = title;
@@ -8,7 +8,7 @@ public class Note {
     }
 
     public boolean isEmpty() {
-        return (title == "" && contents == "");
+        return (title == null && contents == null) || (title == "" && contents == "");
     }
 
     @Override

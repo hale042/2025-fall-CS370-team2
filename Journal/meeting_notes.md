@@ -21,8 +21,15 @@ Meeting for sprint 3:
 - Where: discord (was supposed to be on zoom)
 - What: talk about progress and plannning for how to work on the project going forwards
 
-Meeting for Sprint:
+Meeting for Sprint 4:
+- When: Fri, Nov 14
+- Who: Nikita, Lundon, Luke, Ricky
+- Where: discord
+- What: talk about progress and what need to be done this week
+    - finishing up the GUI and the backend
 
-
-Meeting for Sprint:
-    
+Meeting for Sprint 5:
+- When: 
+- Who: 
+- Where: 
+- What: 

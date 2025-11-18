@@ -20,3 +20,7 @@ This folder is for your project source code.
     R - made changes to the way the search tab was implemented so it works with the tab style ui
             made new TabFrameTemplate superclass for the tabs
             worked on the notes tab
+
+11/12 - GUI
+    R - worked on note tab(also a bit on the recipe tab the day prior)
+        haven't been able to get the saveNote() function work; im having problems with checking if the note is already in the list of saved notes

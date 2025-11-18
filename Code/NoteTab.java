@@ -118,6 +118,7 @@ public class NoteTab extends TabFrameTemplate {
         if (currentNote.isEmpty()) {
             System.out.println("Empty Note");
         } else {
+            
             /* 
                 check if the note is already in the list(compare objects? compare titles?) before saving it
                 
