@@ -8,6 +8,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Arrays;
 
 import javax.swing.JButton;
@@ -22,7 +23,7 @@ public class NoteTab extends TabFrameTemplate {
 
     // private String savedNotes[] = {"Shopping List", "Sandwich Ideas", "Add-Ins For That One Salad", "Foods to try", "test5", "test6"};
     // private Note savedNotes[] = {new Note("Shopping List", " - cabbage\n - apples\n - a half gallon of milk"), new Note("Sandwich Ideas", ""), new Note("Add-Ins For That One Salad", ""), new Note("Foods to try", ""), new Note("test5", ""), new Note("test6", "")};
-    private ArrayList<Note> savedNotes = new ArrayList<Note>(Arrays.asList(new Note("Shopping List", " - cabbage\n - apples\n - a half gallon of milk"), new Note("Sandwich Ideas", ""), new Note("Add-Ins For That One Salad", ""), new Note("Foods to try", ""), new Note("test5", ""), new Note("test6", "")));
+    private List<Note> savedNotes = new ArrayList<Note>(Arrays.asList(new Note("Shopping List", " - cabbage\n - apples\n - a half gallon of milk"), new Note("Sandwich Ideas", ""), new Note("Add-Ins For That One Salad", ""), new Note("Foods to try", ""), new Note("test5", ""), new Note("test6", "")));
     private Note currentNote;
 
     private JList<String> notesList = new JList<>();
@@ -96,10 +97,10 @@ public class NoteTab extends TabFrameTemplate {
         newNoteButton.addActionListener(e -> newNote());
     }
 
-    public void setNoteList(ArrayList<Note> Notes) {
+    public void setNoteList(List<Note> Notes) {
         savedNotes = Notes;
-        // take in an arraylist of notes, put their titles in a list display it on the page
-        ArrayList<String> temp = new ArrayList<>();
+        // take in an list of notes, put their titles in a list display it on the page
+        List<String> temp = new ArrayList<>();
         for (Note note : Notes) {
             temp.add(note.title);
         }

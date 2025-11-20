@@ -10,9 +10,16 @@ import javax.swing.JTabbedPane;
  * Version 1.0
  * Developed by Team 2 (Luke Hale, Lundon Dotson, Nikita Sharma, Ricky Arnold)
  */
+// public class CookItGUI extends JFrame implements GUIInterface {
 public class CookItGUI extends JFrame {
     private JFrame mainFrame = new JFrame("CookIt!"); // main window
     protected JTabbedPane tabbedPane;
+    
+    protected SearchTab searchTab = new SearchTab(this);
+    protected WelcomeTab welcomeTab = new WelcomeTab();
+    protected RecipeTab recipeTab = new RecipeTab();
+    protected NewRecipeTab NewRecipeTab = new NewRecipeTab();
+    protected NoteTab noteTab = new NoteTab();
 
     // frame size
     int frameWidth = 300;
@@ -26,11 +33,11 @@ public class CookItGUI extends JFrame {
         this.mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // what function to run when the window is closed
 
         // tabs
-        SearchTab searchTab = new SearchTab(this);
-        WelcomeTab welcomeTab = new WelcomeTab();
-        RecipeTab recipeTab = new RecipeTab();
-        NewRecipeTab NewRecipeTab = new NewRecipeTab();
-        NoteTab noteTab = new NoteTab();
+        // SearchTab searchTab = new SearchTab(this);
+        // WelcomeTab welcomeTab = new WelcomeTab();
+        // RecipeTab recipeTab = new RecipeTab();
+        // NewRecipeTab NewRecipeTab = new NewRecipeTab();
+        // NoteTab noteTab = new NoteTab();
 
         // tabbed panes?
         tabbedPane = new JTabbedPane();

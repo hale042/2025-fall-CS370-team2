@@ -4,7 +4,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
+// import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -107,7 +107,7 @@ public class SearchTab extends TabFrameTemplate {
         rightPanel.add(Box.createVerticalStrut(10));
         rightPanel.add(newRecipeButton);
 
-        this.mainPanel.add(rightPanel, BorderLayout.EAST);
+        mainPanel.add(rightPanel, BorderLayout.EAST);
 
         //Event listeners for buttons
         searchButton.addActionListener(e -> findRecipes());
@@ -222,6 +222,7 @@ public class SearchTab extends TabFrameTemplate {
 
     private void openNewRecipeTab() {
         mainGUI.switchTab(NEWRECIPETABINDEX);
+        // GUIInterface.switchTab(NEWRECIPETABINDEX);
     }
 
     public static void main(String args[]) {

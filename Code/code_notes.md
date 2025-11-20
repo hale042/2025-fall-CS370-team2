@@ -31,3 +31,8 @@ This folder is for your project source code.
 
         gonna try to work on the new recipe interface
         also gotta finish the recipe page
+
+11/19 - GUI
+    R - nearly done
+        just need to fix the layout/formatting of the recipe and new recipe tabs and make adjustments to their(? might just be new recipe) functions
+        also need to get the interfaces set up

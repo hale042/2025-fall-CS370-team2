@@ -5,19 +5,21 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
+// public class RecipeTab extends TabFrameTemplate implements GUIInterface {
 public class RecipeTab extends TabFrameTemplate {
     private final Font titleFont = new Font("Segoe UI", Font.BOLD, 35);
     private final Font bodyFont = new Font("Segoe UI", Font.PLAIN, 15);
-    private final String html = "<html><body style='width: %1spx'>%1s";
 
-    private JPanel header, body;
+    private JPanel header, leftPanel, instructionsPanel;
 
     private Recipe currentRecipe;
     
@@ -26,6 +28,7 @@ public class RecipeTab extends TabFrameTemplate {
         // need: title, description, ingredients, and instructions
         mainPanel.setLayout(new BorderLayout(10, 10));
 
+        // viewRecipe(new Recipe("", [], "", "", 0));
         sampleRecipe();
 
         // header / recipe title(subtitle? with author?)
@@ -35,44 +38,46 @@ public class RecipeTab extends TabFrameTemplate {
         title.setFont(titleFont);
         header.add(title);
         
-        mainPanel.add(header, BorderLayout.NORTH);
+        // recipe contents
+        leftPanel = new JPanel();
+        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
+        // leftPanel.setLayout(new GridLayout(3, 1));
+
+        instructionsPanel = new JPanel();
+        // instructionsPanel.setLayout(new GridLayout(0, 1));
+
+        // skills, cooking time, and ingredients
+        leftPanel.add(new JLabel("Skill Level: " + currentRecipe.getSkillLevel()));
+        leftPanel.add(new JLabel("Time: " + currentRecipe.getCookTime() + " minutes"));
         
-        // body / recipe contents
-        body = new JPanel();
-        // body.setLayout(new FlowLayout());
-        // body.setLayout(new FlowLayout(FlowLayout.CENTER));
-        // body.setLayout(new BoxLayout(body, BoxLayout.PAGE_AXIS));
-        body.setLayout(new GridLayout(2, 1));
-        
-        JPanel ingredientsPanel = new JPanel();
-        // ingredientsPanel.setLayout(new BorderLayout());
-        // ingredientsPanel.setLayout(new BoxLayout(ingredientsPanel, BoxLayout.PAGE_AXIS));
-        // ingredientsPanel.setLayout(new GridLayout(currentRecipe.getIngredients().size(), 1));
-        ingredientsPanel.setLayout(new GridLayout(0, 1));
-        // ingredientsPanel.setBackground(Color.BLUE);
-        ingredientsPanel.add(new JLabel("Ingredients: "));
-        
+        // ingredients
+        List<String> ingredientStrings = new ArrayList<String>();
         for (Ingredient currIngredient : currentRecipe.getIngredients()) {
-            JLabel ingredientLabel = new JLabel(currIngredient.getName() + " - " + currIngredient.getAmount() + "\n", JLabel.CENTER);
-            ingredientLabel.setFont(bodyFont);
-            // ingredientsPanel.add(ingredientLabel);
-            ingredientsPanel.add(ingredientLabel, BorderLayout.CENTER);
+            // JLabel ingredientLabel = new JLabel(currIngredient.getName() + " - " + currIngredient.getAmount() + "\n", JLabel.CENTER);
+            // JLabel ingredientLabel = new JLabel(currIngredient.getName(), JLabel.CENTER);
+            // ingredientLabel.setFont(bodyFont);
+            // ingredientsPanel.add(ingredientLabel, BorderLayout.CENTER);
+            ingredientStrings.add(currIngredient.getName());
         }
-        // JLabel ingredientsLabel = new JLabel();
-        body.add(ingredientsPanel);
+        leftPanel.add(new JLabel("Ingredients: " + String.join(", ", ingredientStrings)));
         
-        JPanel instructionsPanel = new JPanel();
-        // instructionsPanel.setBackground(Color.BLUE);
+        // JLabel instructionsLabel = new JLabel(String.format(html, 1000, currentRecipe.getInstructions()), JLabel.CENTER);
+        // instructionsLabel.setFont(bodyFont);
+        // instructionsPanel.add(instructionsLabel);
 
-        // instructionsPanel.setLayout(new BoxLayout(instructionsPanel, BoxLayout.Y_AXIS));
-        JLabel instructionsLabel = new JLabel(String.format(html, 1000, currentRecipe.getInstructions()), JLabel.CENTER);
-        instructionsLabel.setFont(bodyFont);
+        JTextArea instructionsArea = new JTextArea();
+        instructionsArea.setEditable(false);
+        instructionsArea.setFont(bodyFont);
+        instructionsArea.setText(currentRecipe.getInstructions());
+        instructionsPanel.add(instructionsArea, BorderLayout.CENTER);        
         
-
-        instructionsPanel.add(instructionsLabel);
-        body.add(instructionsPanel);
+        header.setBackground(Color.RED);
+        leftPanel.setBackground(Color.GREEN);
+        instructionsPanel.setBackground(Color.BLUE);
         
-        mainPanel.add(body, BorderLayout.CENTER);
+        mainPanel.add(header, BorderLayout.NORTH);
+        mainPanel.add(leftPanel, BorderLayout.WEST);
+        mainPanel.add(instructionsPanel, BorderLayout.CENTER);
     }
 
     public void viewRecipe(Recipe recipe) {
