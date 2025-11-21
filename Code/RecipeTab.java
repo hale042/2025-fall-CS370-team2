@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -21,6 +22,7 @@ public class RecipeTab extends TabFrameTemplate {
     private final Font bodyFont = new Font("Segoe UI", Font.PLAIN, 15);
 
     private JPanel header, leftPanel, instructionsPanel;
+    private JButton favoriteButton;
 
     private Recipe currentRecipe;
     
@@ -58,6 +60,12 @@ public class RecipeTab extends TabFrameTemplate {
             ingredientStrings.add(currIngredient.getName());
         }
         leftPanel.add(new JLabel("Ingredients: " + String.join(", ", ingredientStrings)));
+        // try using a JList?
+        // add "favorite recipe" button; should add 
+
+        // favorite button
+        favoriteButton = new JButton("Favorite");
+        leftPanel.add(favoriteButton);
         
         // instructions
         instructionsPanel = new JPanel(new BorderLayout(10, 10));
@@ -82,6 +90,9 @@ public class RecipeTab extends TabFrameTemplate {
         mainPanel.add(header, BorderLayout.NORTH);
         mainPanel.add(leftPanel, BorderLayout.WEST);
         mainPanel.add(instructionsPanel, BorderLayout.CENTER);
+
+        // button bindings
+        favoriteButton.addActionListener(e -> favoriteRecipe());
     }
 
     public void viewRecipe(Recipe recipe) {
@@ -89,6 +100,11 @@ public class RecipeTab extends TabFrameTemplate {
         mainPanel.revalidate();
 
         // System.out.println(this.currentRecipe.getName() + " - " + this.currentRecipe.getInstructions());
+    }
+
+    private void favoriteRecipe() {
+        // add recipe to list of favorite recipes
+        // favorite recipes list will also have to be saved in the file system or the database or whatever
     }
 
     public void sampleRecipe() {

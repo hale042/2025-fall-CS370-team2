@@ -1,4 +1,6 @@
 import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.SwingUtilities;
 import javax.swing.JComponent;
@@ -20,6 +22,8 @@ public class CookItGUI extends JFrame {
     protected RecipeTab recipeTab = new RecipeTab();
     protected NewRecipeTab NewRecipeTab = new NewRecipeTab(this);
     protected NoteTab noteTab = new NoteTab();
+
+    protected List<Recipe> favoriteRecipes = new ArrayList<Recipe>();
 
     // frame size
     int frameWidth = 300;
