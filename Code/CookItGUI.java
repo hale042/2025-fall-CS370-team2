@@ -18,7 +18,7 @@ public class CookItGUI extends JFrame {
     protected SearchTab searchTab = new SearchTab(this);
     protected WelcomeTab welcomeTab = new WelcomeTab();
     protected RecipeTab recipeTab = new RecipeTab();
-    protected NewRecipeTab NewRecipeTab = new NewRecipeTab();
+    protected NewRecipeTab NewRecipeTab = new NewRecipeTab(this);
     protected NoteTab noteTab = new NoteTab();
 
     // frame size

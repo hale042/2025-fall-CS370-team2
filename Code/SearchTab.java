@@ -40,6 +40,8 @@ public class SearchTab extends TabFrameTemplate {
     private RecipeFinder finder;
     private Recipe selectedRecipe;
 
+    private Font tabFont = new Font("Segoe UI", Font.PLAIN, 13);
+
     public SearchTab(CookItGUI mainGUI) {
         this.mainGUI = mainGUI;
     }
@@ -51,7 +53,7 @@ public class SearchTab extends TabFrameTemplate {
         setupSampleData();  // temporary local data
 
         // Layout setup
-        this.mainPanel.setLayout(new BorderLayout(10, 10));
+        mainPanel.setLayout(new BorderLayout(10, 10));
         // setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // setPreferredSize(new Dimension(800, 600));
 
@@ -81,7 +83,7 @@ public class SearchTab extends TabFrameTemplate {
         // Center panel / search result panel 
         resultArea = new JTextArea();
         resultArea.setEditable(false);
-        resultArea.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        resultArea.setFont(tabFont);
         JScrollPane scrollPane = new JScrollPane(resultArea);
         scrollPane.setBorder(new TitledBorder("Matching Recipes"));
         this.mainPanel.add(scrollPane, BorderLayout.CENTER);
