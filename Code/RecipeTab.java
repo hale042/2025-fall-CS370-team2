@@ -12,6 +12,7 @@ import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 // public class RecipeTab extends TabFrameTemplate implements GUIInterface {
@@ -43,9 +44,6 @@ public class RecipeTab extends TabFrameTemplate {
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
         // leftPanel.setLayout(new GridLayout(3, 1));
 
-        instructionsPanel = new JPanel();
-        // instructionsPanel.setLayout(new GridLayout(0, 1));
-
         // skills, cooking time, and ingredients
         leftPanel.add(new JLabel("Skill Level: " + currentRecipe.getSkillLevel()));
         leftPanel.add(new JLabel("Time: " + currentRecipe.getCookTime() + " minutes"));
@@ -61,19 +59,25 @@ public class RecipeTab extends TabFrameTemplate {
         }
         leftPanel.add(new JLabel("Ingredients: " + String.join(", ", ingredientStrings)));
         
-        // JLabel instructionsLabel = new JLabel(String.format(html, 1000, currentRecipe.getInstructions()), JLabel.CENTER);
-        // instructionsLabel.setFont(bodyFont);
-        // instructionsPanel.add(instructionsLabel);
-
+        // instructions
+        instructionsPanel = new JPanel(new BorderLayout(10, 10));
+        // instructionsPanel.setLayout(new GridLayout(0, 1));
+        
         JTextArea instructionsArea = new JTextArea();
         instructionsArea.setEditable(false);
+        instructionsArea.setLineWrap(true);
+        instructionsArea.setWrapStyleWord(true);
         instructionsArea.setFont(bodyFont);
         instructionsArea.setText(currentRecipe.getInstructions());
-        instructionsPanel.add(instructionsArea, BorderLayout.CENTER);        
+        // instructionsPanel.add(instructionsArea, BorderLayout.CENTER);        
+
+        JScrollPane scrollableInstructions = new JScrollPane(instructionsArea); // make it scrollable
+        instructionsPanel.add(scrollableInstructions, BorderLayout.CENTER);        
         
-        header.setBackground(Color.RED);
-        leftPanel.setBackground(Color.GREEN);
-        instructionsPanel.setBackground(Color.BLUE);
+        // colors for debugging
+        // header.setBackground(Color.RED);
+        // leftPanel.setBackground(Color.GREEN);
+        // instructionsPanel.setBackground(Color.BLUE);
         
         mainPanel.add(header, BorderLayout.NORTH);
         mainPanel.add(leftPanel, BorderLayout.WEST);
@@ -92,6 +96,7 @@ public class RecipeTab extends TabFrameTemplate {
         String name = "Spaghetti";
         // List<Ingredient> ingredients = Arrays.asList(new Ingredient("water"), new Ingredient("dry spaghetti noodles"), new Ingredient("salt"), new Ingredient("Ground Meat"), new Ingredient("Tomatoes"));
         List<Ingredient> ingredients = Arrays.asList(new Ingredient("water"), new Ingredient("dry spaghetti noodles"), new Ingredient("salt"), new Ingredient("Ground Meat"), new Ingredient("Tomatoes"));
+        // String instructions = "1 - Brown the meat: Heat the oil in a large pot over medium-high heat (we use a Dutch oven). Add the meat and cook until browned, about 8 minutes. Use a wooden spoon to break the meat into smaller crumbles as the meat cooks.\n";
         String instructions = "1 - Brown the meat: Heat the oil in a large pot over medium-high heat (we use a Dutch oven). Add the meat and cook until browned, about 8 minutes. Use a wooden spoon to break the meat into smaller crumbles as the meat cooks.\n" + //
                         "2 - Build the sauce: Add the onions and cook, stirring every once in a while, until softened, about 5 minutes. Stir in the garlic, tomato paste, oregano, and red pepper flakes and cook, stirring continuously for about 1 minute.\n" + //
                         "3 - Add liquid and tomatoes: Pour in the water and use a wooden spoon to scrape up any bits of meat or onion stuck to the bottom of the pot. Stir in the tomatoes, ¾ teaspoon of salt, and a generous pinch of black pepper.\n" + //
