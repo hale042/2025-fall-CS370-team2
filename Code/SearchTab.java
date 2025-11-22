@@ -78,7 +78,7 @@ public class SearchTab extends TabFrameTemplate {
         topPanel.add(searchButton);
         topPanel.add(clearButton);
 
-        this.mainPanel.add(topPanel, BorderLayout.NORTH);
+        mainPanel.add(topPanel, BorderLayout.NORTH);
 
         // Center panel / search result panel 
         resultArea = new JTextArea();
@@ -86,7 +86,7 @@ public class SearchTab extends TabFrameTemplate {
         resultArea.setFont(tabFont);
         JScrollPane scrollPane = new JScrollPane(resultArea);
         scrollPane.setBorder(new TitledBorder("Matching Recipes"));
-        this.mainPanel.add(scrollPane, BorderLayout.CENTER);
+        mainPanel.add(scrollPane, BorderLayout.CENTER);
 
         // Right panel / details panel
         JPanel rightPanel = new JPanel();
@@ -145,7 +145,7 @@ public class SearchTab extends TabFrameTemplate {
     private void findRecipes() {
         String inputText = ingredientField.getText().trim().toLowerCase();
         if (inputText.isEmpty()) {
-            JOptionPane.showMessageDialog(this.mainPanel, "Please enter at least one ingredient.");
+            JOptionPane.showMessageDialog(mainPanel, "Please enter at least one ingredient.");
             return;
         }
 
@@ -175,7 +175,7 @@ public class SearchTab extends TabFrameTemplate {
                     int index = Integer.parseInt(choice) - 1;
                     if (index >= 0 && index < results.size()) {
                         selectedRecipe = results.get(index);
-                        JOptionPane.showMessageDialog(this.mainPanel, "Selected: " + selectedRecipe.getName());
+                        JOptionPane.showMessageDialog(mainPanel, "Selected: " + selectedRecipe.getName());
                     }
                 } catch (NumberFormatException ignored) {}
             }
@@ -191,7 +191,7 @@ public class SearchTab extends TabFrameTemplate {
 
     private void showRecipeDetails() {
         if (selectedRecipe == null) {
-            JOptionPane.showMessageDialog(this.mainPanel, "Please select a recipe first.");
+            JOptionPane.showMessageDialog(mainPanel, "Please select a recipe first.");
             return;
         }
 
@@ -207,13 +207,13 @@ public class SearchTab extends TabFrameTemplate {
 
         JScrollPane pane = new JScrollPane(details);
         pane.setPreferredSize(new Dimension(400, 300));
-        JOptionPane.showMessageDialog(this.mainPanel, pane, "Recipe Details", JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showMessageDialog(mainPanel, pane, "Recipe Details", JOptionPane.PLAIN_MESSAGE);
     }
 
     private void chooseImage() {
         JFileChooser chooser = new JFileChooser();
         chooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("PNG Images", "png"));
-        int result = chooser.showOpenDialog(this.mainPanel);
+        int result = chooser.showOpenDialog(mainPanel);
         if (result == JFileChooser.APPROVE_OPTION) {
             File file = chooser.getSelectedFile();
             ImageIcon icon = new ImageIcon(file.getAbsolutePath());

@@ -8,6 +8,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
@@ -117,7 +118,8 @@ public class WelcomeTab extends TabFrameTemplate {
         // System.out.println("Selected note index: " + recipeIndex + " and title: " + recipeName);
 
         if (recipeIndex == -1) {
-            System.out.println("No Recipe Selected");
+            // System.out.println("No Recipe Selected");
+            JOptionPane.showMessageDialog(this.mainPanel, "No Recipe Selected.");
         }
         else {
             mainGUI.favoriteRecipes.remove(recipeIndex);

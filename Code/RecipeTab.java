@@ -14,6 +14,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -135,7 +136,8 @@ public class RecipeTab extends TabFrameTemplate {
         // needs similar logic to the noteslist; a recipe shouldn't be savable once it's been saved(i.e. no duplicates)
         
         if (currentRecipe.isEmpty()) {
-            System.out.println("Empty Recipe");
+            // System.out.println("Empty Recipe");
+            JOptionPane.showMessageDialog(mainPanel, "Empty Recipe.");
         } else {
            int foundRecipeIndex = -1;
            for (int i = 0; i < mainGUI.favoriteRecipes.size(); i++) {
@@ -153,7 +155,8 @@ public class RecipeTab extends TabFrameTemplate {
             else {
                 // recipe is already in the list; don't save
                 // probably should notify the user
-                System.out.println("Recipe already favorited");
+                JOptionPane.showMessageDialog(mainPanel, "Recipe already favorited.");
+                // System.out.println("Recipe already favorited");
             }
         }
 

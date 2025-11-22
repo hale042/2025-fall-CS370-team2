@@ -13,6 +13,7 @@ import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 
 public class NoteTab extends TabFrameTemplate {
     private JTextField noteTitleField;
@@ -119,7 +120,8 @@ public class NoteTab extends TabFrameTemplate {
         // System.out.println(currentNote.title + " - " + currentNote.contents);
 
         if (currentNote.isEmpty()) {
-            System.out.println("Empty Note");
+            // System.out.println("Empty Note");
+            JOptionPane.showMessageDialog(mainPanel, "Empty Note.");
         } else {
             // System.out.println(currentNote.title + " - " + currentNote.title.length());
 
@@ -130,7 +132,7 @@ public class NoteTab extends TabFrameTemplate {
             */
             int foundNoteIndex = -1;
             for (int i = 0; i < savedNotes.size(); i++) {
-                System.out.println(savedNotes.get(i).title + " - " + currentNote.title);
+                // System.out.println(savedNotes.get(i).title + " - " + currentNote.title);
                 // if(currentNote.equals(savedNotes.get(i))) {
                 if(currentNote.title.equals(savedNotes.get(i).title)) {
                     foundNoteIndex = i;
@@ -160,28 +162,38 @@ public class NoteTab extends TabFrameTemplate {
     public void deleteNote() {
         // delete the note selected from the list and update the displayed list
         int noteIndex = notesList.getSelectedIndex();
-        String noteTitle = (String) notesList.getSelectedValue();
-        System.out.println("Selected note index: " + noteIndex + " and title: " + noteTitle);
+        // String noteTitle = (String) notesList.getSelectedValue();
+        // System.out.println("Selected note index: " + noteIndex + " and title: " + noteTitle);
 
-        savedNotes.remove(noteIndex);
-        setNoteList(savedNotes);
+        if (noteIndex == -1) {
+            JOptionPane.showMessageDialog(mainPanel, "Please select a note.");
+        }
+        else {
+            savedNotes.remove(noteIndex);
+            setNoteList(savedNotes);
+        }
     }
 
     public void openNote() {
         // System.out.println("This is a test of the open note function.");
         // https://examples.javacodegeeks.com/java-development/desktop-java/swing/jlist/get-selected-value-from-jlist/
         int noteIndex = notesList.getSelectedIndex();
-        String noteTitle = (String) notesList.getSelectedValue();
-        System.out.println("Selected note index: " + noteIndex + " and title: " + noteTitle);
+        // String noteTitle = (String) notesList.getSelectedValue();
+        // System.out.println("Selected note index: " + noteIndex + " and title: " + noteTitle);
 
-        // currentNote = savedNotes[noteIndex];
-        currentNote = savedNotes.get(noteIndex);
-        noteTitleField.setText(currentNote.title);
-        noteContentsField.setText(currentNote.contents);
+        if (noteIndex == -1) {
+            JOptionPane.showMessageDialog(mainPanel, "Please select a note.");
+        }
+        else {
+            // currentNote = savedNotes[noteIndex];
+            currentNote = savedNotes.get(noteIndex);
+            noteTitleField.setText(currentNote.title);
+            noteContentsField.setText(currentNote.contents);
+        }
     }
 
     public void newNote() {
-        System.out.println("This is a test of the new note function.");
+        // System.out.println("This is a test of the new note function.");
         clearNote();
     }
 }
