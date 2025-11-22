@@ -27,5 +27,25 @@ public class Recipe {
         for (Ingredient ing : ingredients) sb.append("• ").append(ing.getName()).append("\n");
         return sb.toString();
     }
+    
+    public boolean isEmpty() {
+        // return (title == null && contents == null) || (title == "" && contents == "");
+        // return (name.isBlank() && ingredients.isEmpty() && instructions.isBlank() && (cookTime == 0) && skillLevel.isBlank());
+        return ((name == null) && (ingredients == null) && (instructions == null) && (cookTime == 0) && (skillLevel == null));
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+
+        if (!(obj instanceof Note)) {
+            return false;
+        }
+
+        Recipe recipeObj = (Recipe) obj;
+        return (recipeObj.getName().equals(name) && recipeObj.getIngredients().equals(ingredients) && recipeObj.getInstructions().equals(instructions) && (recipeObj.getCookTime() == cookTime) && recipeObj.getSkillLevel().equals(skillLevel));
+    }
 }
 

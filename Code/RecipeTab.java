@@ -9,22 +9,32 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 // public class RecipeTab extends TabFrameTemplate implements GUIInterface {
 public class RecipeTab extends TabFrameTemplate {
+    private CookItGUI mainGUI;
+
     private final Font titleFont = new Font("Segoe UI", Font.BOLD, 35);
+    private final Font labelFont = new Font("Segoe UI", Font.PLAIN, 20);
     private final Font bodyFont = new Font("Segoe UI", Font.PLAIN, 15);
 
     private JPanel header, leftPanel, instructionsPanel;
     private JButton favoriteButton;
+    private JList<String> ingredients;
 
     private Recipe currentRecipe;
+
+    public RecipeTab(CookItGUI GUI) {
+        this.mainGUI = GUI;
+    }
     
     @Override
     public void initializeTabContents() {
@@ -47,19 +57,37 @@ public class RecipeTab extends TabFrameTemplate {
         // leftPanel.setLayout(new GridLayout(3, 1));
 
         // skills, cooking time, and ingredients
-        leftPanel.add(new JLabel("Skill Level: " + currentRecipe.getSkillLevel()));
-        leftPanel.add(new JLabel("Time: " + currentRecipe.getCookTime() + " minutes"));
+        JLabel skillLabel = new JLabel("Skill Level: " + currentRecipe.getSkillLevel());
+        skillLabel.setFont(labelFont);
+        leftPanel.add(skillLabel);
         
-        // ingredients
+        leftPanel.add(Box.createVerticalStrut(10));
+        
+        JLabel timeLabel = new JLabel("Time: " + currentRecipe.getCookTime() + " minutes");
+        timeLabel.setFont(labelFont);
+        leftPanel.add(timeLabel);
+        leftPanel.add(Box.createVerticalStrut(10));
+        
+        // ingredients list
+        // get the names of each ingredient
         List<String> ingredientStrings = new ArrayList<String>();
         for (Ingredient currIngredient : currentRecipe.getIngredients()) {
-            // JLabel ingredientLabel = new JLabel(currIngredient.getName() + " - " + currIngredient.getAmount() + "\n", JLabel.CENTER);
-            // JLabel ingredientLabel = new JLabel(currIngredient.getName(), JLabel.CENTER);
-            // ingredientLabel.setFont(bodyFont);
-            // ingredientsPanel.add(ingredientLabel, BorderLayout.CENTER);
             ingredientStrings.add(currIngredient.getName());
         }
-        leftPanel.add(new JLabel("Ingredients: " + String.join(", ", ingredientStrings)));
+        // leftPanel.add(new JLabel("Ingredients: " + String.join(", ", ingredientStrings)));
+
+        JLabel ingredientsLabel = new JLabel("Ingredients:");
+        ingredientsLabel.setFont(labelFont);
+        leftPanel.add(ingredientsLabel);
+        leftPanel.add(Box.createVerticalStrut(10));
+
+        String ingredientsArray[] = ingredientStrings.toArray(new String[ingredientStrings.size()]);
+        ingredients = new JList<String>(ingredientsArray);
+        ingredients.setFont(labelFont);
+        // ingredients.setFont(bodyFont);
+        JScrollPane scrollableRecipesList = new JScrollPane(ingredients); // make it scrollable
+        leftPanel.add(scrollableRecipesList, BorderLayout.CENTER);
+
         // try using a JList?
         // add "favorite recipe" button; should add 
 
@@ -104,6 +132,31 @@ public class RecipeTab extends TabFrameTemplate {
 
     private void favoriteRecipe() {
         // add recipe to list of favorite recipes
+        // needs similar logic to the noteslist; a recipe shouldn't be savable once it's been saved(i.e. no duplicates)
+        
+        if (currentRecipe.isEmpty()) {
+            System.out.println("Empty Recipe");
+        } else {
+           int foundRecipeIndex = -1;
+           for (int i = 0; i < mainGUI.favoriteRecipes.size(); i++) {
+            //    System.out.println(mainGUI.favoriteRecipes.get(i).getName() + " - " + currentRecipe.getName());
+                // if(currentRecipe.title.equals(mainGUI.favoriteRecipes.get(i).title)) {
+                if(currentRecipe.equals(mainGUI.favoriteRecipes.get(i))) {
+                    foundRecipeIndex = i;
+                }
+            }
+            
+            if (foundRecipeIndex == -1) { // if we didn't find a duplicate recipe, add it to the list
+                mainGUI.favoriteRecipes.add(currentRecipe);
+                mainGUI.welcomeTab.updateFavoritesList();
+            }
+            else {
+                // recipe is already in the list; don't save
+                // probably should notify the user
+                System.out.println("Recipe already favorited");
+            }
+        }
+
         // favorite recipes list will also have to be saved in the file system or the database or whatever
     }
 

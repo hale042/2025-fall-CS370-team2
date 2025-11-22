@@ -49,7 +49,7 @@ public class NewRecipeTab extends TabFrameTemplate {
         // title
         titlePanel = new JPanel(new BorderLayout(10, 10));
         titlePanel.setBorder(new TitledBorder("Recipe Title"));
-        titlePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 10));
+        titlePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 10)); // set max height for title panel
 
         titleInput = new JTextField();
         titleInput.setFont(tabFont);
