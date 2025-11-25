@@ -86,6 +86,51 @@ public class Database_Manager {
         return recipes;
     }
 
+    public List<Recipe> fetchRecipeList(List<String> names){
+        List<Recipe> recipes = new ArrayList<>();
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            statement = connection.createStatement();
+            StringBuilder sb = new StringBuilder("SELECT * FROM " + table + " WHERE ");
+            for(String i : names) {
+                sb.append("name = '").append(i).append("' OR ");
+            }
+            sb.delete(sb.length() - 4, sb.length());
+
+            resultSet = statement.executeQuery(sb.toString());
+            while (resultSet.next()) {
+
+                String name = resultSet.getString("name");
+                String ingredients = resultSet.getString("ingredients");
+                String instructions = resultSet.getString("instructions");
+                String skillLevel = resultSet.getString("skill");
+                int cookTime = resultSet.getInt("time");
+
+                List<String> ingredientsList = new ArrayList<>(List.of(ingredients.split(" ")));
+                Recipe recipe = new Recipe(name, ingredientsList, instructions, skillLevel, cookTime);
+
+                recipes.add(recipe);
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return recipes;
+    }
+
     public List<Recipe> fetchRecipeList(List<String> ingredients, String skill, String time){
         List<Recipe> recipes = new ArrayList<>();
         Statement statement = null;
