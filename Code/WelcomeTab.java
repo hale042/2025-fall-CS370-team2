@@ -154,11 +154,12 @@ public class WelcomeTab extends TabFrameTemplate {
     }
 
     public void openRandomRecipe() {
-        // get random recipe from API call
-        // Recipe selectedRecipe = new Recipe();
-
-        // mainGUI.recipeTab.viewRecipe(selectedRecipe);
         System.out.println("Random Recipe");
+        
+        // get random recipe from API call
+        Recipe selectedRecipe = RecipeApiData.getRandomRecipe();
+
+        mainGUI.recipeTab.viewRecipe(selectedRecipe);
         mainGUI.switchTab(2);
     }
 }

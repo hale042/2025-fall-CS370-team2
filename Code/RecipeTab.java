@@ -30,8 +30,13 @@ public class RecipeTab extends TabFrameTemplate {
     private JPanel header, leftPanel, instructionsPanel;
     private JButton favoriteButton;
     private JList<String> ingredients;
+    private JLabel title, skillLabel, timeLabel, ingredientsLabel;
+    JTextArea instructionsArea;
+    JScrollPane scrollableIngredientsList, scrollableInstructions;
 
-    private Recipe currentRecipe;
+    String ingredientsArray[];
+
+    private Recipe currentRecipe = new Recipe();
 
     public RecipeTab(CookItGUI GUI) {
         this.mainGUI = GUI;
@@ -42,13 +47,14 @@ public class RecipeTab extends TabFrameTemplate {
         // need: title, description, ingredients, and instructions
         mainPanel.setLayout(new BorderLayout(10, 10));
 
+        // header / recipe title(subtitle? with author?)
+        header = new JPanel();
+        
+        // set sample recipe
         // viewRecipe(new Recipe("", [], "", "", 0));
         sampleRecipe();
 
-        // header / recipe title(subtitle? with author?)
-        header = new JPanel();
-
-        JLabel title = new JLabel(currentRecipe.getName());
+        title = new JLabel(currentRecipe.getName());
         title.setFont(titleFont);
         header.add(title);
         
@@ -58,13 +64,13 @@ public class RecipeTab extends TabFrameTemplate {
         // leftPanel.setLayout(new GridLayout(3, 1));
 
         // skills, cooking time, and ingredients
-        JLabel skillLabel = new JLabel("Skill Level: " + currentRecipe.getSkillLevel());
+        skillLabel = new JLabel("Skill Level: " + currentRecipe.getSkillLevel());
         skillLabel.setFont(labelFont);
         leftPanel.add(skillLabel);
         
         leftPanel.add(Box.createVerticalStrut(10));
         
-        JLabel timeLabel = new JLabel("Time: " + currentRecipe.getCookTime() + " minutes");
+        timeLabel = new JLabel("Time: " + currentRecipe.getCookTime() + " minutes");
         timeLabel.setFont(labelFont);
         leftPanel.add(timeLabel);
         leftPanel.add(Box.createVerticalStrut(10));
@@ -77,17 +83,17 @@ public class RecipeTab extends TabFrameTemplate {
         }
         // leftPanel.add(new JLabel("Ingredients: " + String.join(", ", ingredientStrings)));
 
-        JLabel ingredientsLabel = new JLabel("Ingredients:");
+        ingredientsLabel = new JLabel("Ingredients:");
         ingredientsLabel.setFont(labelFont);
         leftPanel.add(ingredientsLabel);
         leftPanel.add(Box.createVerticalStrut(10));
 
-        String ingredientsArray[] = ingredientStrings.toArray(new String[ingredientStrings.size()]);
+        ingredientsArray = ingredientStrings.toArray(new String[ingredientStrings.size()]);
         ingredients = new JList<String>(ingredientsArray);
         ingredients.setFont(labelFont);
         // ingredients.setFont(bodyFont);
-        JScrollPane scrollableRecipesList = new JScrollPane(ingredients); // make it scrollable
-        leftPanel.add(scrollableRecipesList, BorderLayout.CENTER);
+        scrollableIngredientsList = new JScrollPane(ingredients); // make it scrollable
+        leftPanel.add(scrollableIngredientsList, BorderLayout.CENTER);
 
         // try using a JList?
         // add "favorite recipe" button; should add 
@@ -100,7 +106,7 @@ public class RecipeTab extends TabFrameTemplate {
         instructionsPanel = new JPanel(new BorderLayout(10, 10));
         // instructionsPanel.setLayout(new GridLayout(0, 1));
         
-        JTextArea instructionsArea = new JTextArea();
+        instructionsArea = new JTextArea();
         instructionsArea.setEditable(false);
         instructionsArea.setLineWrap(true);
         instructionsArea.setWrapStyleWord(true);
@@ -108,7 +114,7 @@ public class RecipeTab extends TabFrameTemplate {
         instructionsArea.setText(currentRecipe.getInstructions());
         // instructionsPanel.add(instructionsArea, BorderLayout.CENTER);        
 
-        JScrollPane scrollableInstructions = new JScrollPane(instructionsArea); // make it scrollable
+        scrollableInstructions = new JScrollPane(instructionsArea); // make it scrollable
         instructionsPanel.add(scrollableInstructions, BorderLayout.CENTER);        
         
         // colors for debugging
@@ -126,7 +132,29 @@ public class RecipeTab extends TabFrameTemplate {
 
     public void viewRecipe(Recipe recipe) {
         this.currentRecipe = recipe;
-        mainPanel.revalidate();
+        // mainPanel.revalidate();
+
+        if ((title != null) && (skillLabel != null) && (timeLabel != null) && (scrollableIngredientsList != null) && (scrollableInstructions != null)) {
+            title.setText(currentRecipe.getName());
+    
+            skillLabel.setText("Skill Level: " + currentRecipe.getSkillLevel());
+    
+            timeLabel.setText("Time: " + currentRecipe.getCookTime());
+    
+            // ingredients
+            // get the ingredient names
+            List<String> ingredientStrings = new ArrayList<String>();
+            for (Ingredient currIngredient : currentRecipe.getIngredients()) {
+                ingredientStrings.add(currIngredient.getName());
+            }
+            // set contents of ingredients list to the ingredient names
+            ingredientsArray = ingredientStrings.toArray(new String[ingredientStrings.size()]);
+            ingredients.setListData(ingredientsArray);
+    
+            // instructions
+            instructionsArea.setText(currentRecipe.getInstructions());
+            // title.setText(currentRecipe.getName());
+        }
 
         // System.out.println(this.currentRecipe.getName() + " - " + this.currentRecipe.getInstructions());
     }

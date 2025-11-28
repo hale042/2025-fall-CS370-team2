@@ -76,7 +76,7 @@ public class RecipeApiData {
         // String category = mealData.get("strCategory").toString();
         String instructions = mealData.get("strInstructions").toString();
         
-        System.out.println(recipeName + " - " + instructions);
+        // System.out.println(recipeName + " - " + instructions);
         Recipe recipe = new Recipe(recipeName, ingredients, instructions, "null", 0);
         return recipe;
     }
