@@ -21,9 +21,9 @@ public class WelcomeTab extends TabFrameTemplate {
 
     private String welcomeBlurb = "Welcome to CookIt! This is the \"How to\" / Welcome Blurb!";
 
-    private JPanel titlePanel, blurbPanel, favoritesPanel;
+    private JPanel titlePanel, blurbPanel, favoritesPanel, buttonsPanel;
     private JLabel title, introBlurb, noFavoritesLabel;
-    private JButton deleteButton;
+    private JButton openButton, deleteButton;
     private JList<String> favoritesJList = new JList<>();
     private JScrollPane scrollableFavorites = new JScrollPane();
 
@@ -72,17 +72,25 @@ public class WelcomeTab extends TabFrameTemplate {
 
         scrollableFavorites = new JScrollPane(favoritesJList); // make it scrollable
         scrollableFavorites.setVisible(false);
-        
+
+        // buttons
+        buttonsPanel = new JPanel();
+
+        openButton = new JButton("Open");
         deleteButton = new JButton("Delete");
+
+        buttonsPanel.add(openButton);
+        buttonsPanel.add(deleteButton);
 
         favoritesPanel.add(noFavoritesLabel, BorderLayout.NORTH);
         favoritesPanel.add(scrollableFavorites, BorderLayout.CENTER);
-        favoritesPanel.add(deleteButton, BorderLayout.SOUTH);
+        favoritesPanel.add(buttonsPanel, BorderLayout.SOUTH);
 
         // mainPanel.add(scrollableFavorites, BorderLayout.CENTER);
         mainPanel.add(favoritesPanel);
 
         // button bindings
+        openButton.addActionListener(e -> openRecipe());
         deleteButton.addActionListener(e -> unfavoriteRecipe());
     }
 
@@ -116,7 +124,7 @@ public class WelcomeTab extends TabFrameTemplate {
         int recipeIndex = favoritesJList.getSelectedIndex();
         // String recipeName = (String) favoritesJList.getSelectedValue();
         // System.out.println("Selected note index: " + recipeIndex + " and title: " + recipeName);
-
+        
         if (recipeIndex == -1) {
             // System.out.println("No Recipe Selected");
             JOptionPane.showMessageDialog(this.mainPanel, "No Recipe Selected.");
@@ -124,6 +132,20 @@ public class WelcomeTab extends TabFrameTemplate {
         else {
             mainGUI.favoriteRecipes.remove(recipeIndex);
             updateFavoritesList();
+        }
+    }
+    
+    public void openRecipe() {
+        int recipeIndex = favoritesJList.getSelectedIndex();
+        
+        if (recipeIndex == -1) {
+            // System.out.println("No Recipe Selected");
+            JOptionPane.showMessageDialog(this.mainPanel, "No Recipe Selected.");
+        }
+        else {
+            Recipe selectedRecipe = mainGUI.favoriteRecipes.get(recipeIndex);
+            mainGUI.recipeTab.viewRecipe(selectedRecipe);
+            mainGUI.switchTab(2);
         }
     }
 }

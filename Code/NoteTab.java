@@ -52,9 +52,9 @@ public class NoteTab extends TabFrameTemplate {
         JButton newNoteButton = new JButton("New");
         JButton deleteNoteButton = new JButton("Delete");
         
-        listButtons.add(openNoteButton, BorderLayout.SOUTH);
-        listButtons.add(newNoteButton, BorderLayout.SOUTH);
-        listButtons.add(deleteNoteButton, BorderLayout.SOUTH);
+        listButtons.add(openNoteButton);
+        listButtons.add(newNoteButton);
+        listButtons.add(deleteNoteButton);
 
         notesListPanel.add(listButtons, BorderLayout.SOUTH);
         
