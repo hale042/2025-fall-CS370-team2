@@ -163,7 +163,7 @@ public class RecipeApiData {
     }
 
     private static JSONObject getRandomRecipeData() {
-        // added by RArnold
+        // added by RArnold; only real change is the url string, used the one for the random recipe
         String urlString = "https://www.themealdb.com/api/json/v1/1/random.php";
 
         try {
