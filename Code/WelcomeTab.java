@@ -19,11 +19,12 @@ public class WelcomeTab extends TabFrameTemplate {
     
     private CookItGUI mainGUI;
 
-    private String welcomeBlurb = "Welcome to CookIt! This is the \"How to\" / Welcome Blurb!";
+    // private String welcomeBlurb = "Welcome to CookIt! This is the \"How to\" / Welcome Blurb!";
+    private String welcomeBlurb = "Welcome to CookIt! Go to the Search tab to enter ingredients you have to generate recipes you can make or select a recipe from the catalogue";
 
     private JPanel titlePanel, blurbPanel, favoritesPanel, buttonsPanel;
     private JLabel title, introBlurb, noFavoritesLabel;
-    private JButton openButton, deleteButton;
+    private JButton openButton, deleteButton, randomRecipeButton;
     private JList<String> favoritesJList = new JList<>();
     private JScrollPane scrollableFavorites = new JScrollPane();
 
@@ -78,9 +79,11 @@ public class WelcomeTab extends TabFrameTemplate {
 
         openButton = new JButton("Open");
         deleteButton = new JButton("Delete");
+        randomRecipeButton = new JButton("Random Recipe");
 
         buttonsPanel.add(openButton);
         buttonsPanel.add(deleteButton);
+        buttonsPanel.add(randomRecipeButton);
 
         favoritesPanel.add(noFavoritesLabel, BorderLayout.NORTH);
         favoritesPanel.add(scrollableFavorites, BorderLayout.CENTER);
@@ -92,6 +95,7 @@ public class WelcomeTab extends TabFrameTemplate {
         // button bindings
         openButton.addActionListener(e -> openRecipe());
         deleteButton.addActionListener(e -> unfavoriteRecipe());
+        randomRecipeButton.addActionListener(e -> openRandomRecipe());
     }
 
     public void updateFavoritesList() {
@@ -143,9 +147,18 @@ public class WelcomeTab extends TabFrameTemplate {
             JOptionPane.showMessageDialog(this.mainPanel, "No Recipe Selected.");
         }
         else {
-            Recipe selectedRecipe = mainGUI.favoriteRecipes.get(recipeIndex);
-            mainGUI.recipeTab.viewRecipe(selectedRecipe);
-            mainGUI.switchTab(2);
+            Recipe selectedRecipe = mainGUI.favoriteRecipes.get(recipeIndex); // get recipe from selection
+            mainGUI.recipeTab.viewRecipe(selectedRecipe); // set the currently view recipe to the selected one
+            mainGUI.switchTab(2); // switch to the recipe tab
         }
+    }
+
+    public void openRandomRecipe() {
+        // get random recipe from API call
+        // Recipe selectedRecipe = new Recipe();
+
+        // mainGUI.recipeTab.viewRecipe(selectedRecipe);
+        System.out.println("Random Recipe");
+        mainGUI.switchTab(2);
     }
 }
