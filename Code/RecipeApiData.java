@@ -9,8 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class RecipeApiData{
+public class RecipeApiData {
     public static void main(String[] args){
+        // getRecipeFromName("spaghetti");
+        // getRandomRecipeData();
+        // getRandomRecipe();
+
         try{
             Scanner scanner = new Scanner(System.in);
             String recipe;
@@ -46,6 +50,51 @@ public class RecipeApiData{
         }catch(Exception e){
             e.printStackTrace();
         }
+    }
+
+    public static Recipe getRecipeFromName(String mealName) {
+        // added by RArnold
+        JSONObject mealData = (JSONObject) getRecipeData(mealName);
+
+        String recipeName = mealData.get("strMeal").toString();
+        // List<String> ingredients = extractIngredients(mealData);
+        List<Ingredient> ingredients = stringToIngredientsList(extractIngredients(mealData));;
+        // String category = mealData.get("strCategory").toString();
+        String instructions = mealData.get("strInstructions").toString();
+        
+        Recipe recipe = new Recipe(recipeName, ingredients, instructions, "null", 0);
+        return recipe;
+    }
+
+    public static Recipe getRandomRecipe() {
+        // added by RArnold
+        JSONObject mealData = (JSONObject) getRandomRecipeData();
+
+        String recipeName = mealData.get("strMeal").toString();
+        // List<String> ingredients = extractIngredients(mealData);
+        List<Ingredient> ingredients = stringToIngredientsList(extractIngredients(mealData));;
+        // String category = mealData.get("strCategory").toString();
+        String instructions = mealData.get("strInstructions").toString();
+        
+        System.out.println(recipeName + " - " + instructions);
+        Recipe recipe = new Recipe(recipeName, ingredients, instructions, "null", 0);
+        return recipe;
+    }
+
+    private static List<Ingredient> stringToIngredientsList(List<String> ingredients) {
+        // added by RArnold
+        List<Ingredient> ingredientsList = new ArrayList<Ingredient>();
+
+        for (String ingredientString : ingredients) {
+            String ingredientAmount = ingredientString.split(" ")[0];
+            String ingredientName = ingredientString.split(" ")[1];
+            // System.out.println(ingredientAmount + " " + ingredientName);
+
+            Ingredient ingredient = new Ingredient(ingredientName, ingredientAmount);
+            ingredientsList.add(ingredient);
+        }
+
+        return ingredientsList;
     }
 
     private static List<String> extractIngredients(JSONObject mealData) {
@@ -110,6 +159,51 @@ public class RecipeApiData{
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
+    }
+
+    private static JSONObject getRandomRecipeData() {
+        // added by RArnold
+        String urlString = "https://www.themealdb.com/api/json/v1/1/random.php";
+
+        try {
+            //fetch api
+            HttpURLConnection apiConnection = fetchApiResponse(urlString);
+
+            //check response
+            //if 200 its success
+            if (apiConnection.getResponseCode() != 200) {
+                System.out.println("Error: Could not connect to the API");
+
+                return null;
+            }
+
+            //read response and convert store string type
+            String jsonResponse = readApiResponse(apiConnection);
+
+            //parse string into json object
+            JSONParser parser = new JSONParser();
+            JSONObject resultsJsonObj = (JSONObject) parser.parse(jsonResponse);
+
+            //retrieve data
+            //  JSONArray recipeData = (JSONArray) resultsJsonObj.get("meals");
+
+            JSONArray mealArray = (JSONArray) resultsJsonObj.get("meals");
+
+            if (mealArray == null) {
+                System.out.println("No recipe found.");
+
+                return null;
+            }
+
+            //  return (JSONObject) recipeData.get(0);
+            return (JSONObject) mealArray.get(0);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return null;
     }
 

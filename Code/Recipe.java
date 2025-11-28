@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class Recipe {
@@ -7,6 +8,14 @@ public class Recipe {
     private String instructions;
     private String skillLevel;
     private int cookTime; // in minutes
+
+    // public Recipe() {
+    //     this.name = null;
+    //     this.ingredients = new ArrayList<Ingredient>();
+    //     this.instructions = null;
+    //     this.skillLevel = null;
+    //     this.cookTime = 0;
+    // }
 
     public Recipe(String name, List<Ingredient> ingredients, String instructions, String skillLevel, int cookTime) {
         this.name = name;
