@@ -53,7 +53,7 @@ public class RecipeApiData {
     }
 
     public static Recipe getRecipeFromName(String mealName) {
-        // added by RArnold
+        // added by RArnold; uses "getRecipeData" to return a Recipe object based on the inputted "mealname" term
         JSONObject mealData = (JSONObject) getRecipeData(mealName);
 
         String recipeName = mealData.get("strMeal").toString();
@@ -67,7 +67,7 @@ public class RecipeApiData {
     }
 
     public static Recipe getRandomRecipe() {
-        // added by RArnold
+        // added by RArnold; uses the "getRandomRecipeData" function to return a Recipe object for a random recipe 
         JSONObject mealData = (JSONObject) getRandomRecipeData();
 
         String recipeName = mealData.get("strMeal").toString();
@@ -82,7 +82,7 @@ public class RecipeApiData {
     }
 
     private static List<Ingredient> stringToIngredientsList(List<String> ingredients) {
-        // added by RArnold
+        // added by RArnold; function for converting the string list to a list of ingredients
         List<Ingredient> ingredientsList = new ArrayList<Ingredient>();
 
         for (String ingredientString : ingredients) {
