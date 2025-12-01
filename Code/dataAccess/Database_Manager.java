@@ -182,12 +182,12 @@ public class Database_Manager {
                 sb.append("skill LIKE '%").append(skill).append("%' AND ");
             }
 
-            if(time.equalsIgnoreCase("under 30")) {
+            if(time.equalsIgnoreCase("under 30 min")) {
                 sb.append("time < 30");
 
-            } else if (time.equalsIgnoreCase("30-60")) {
+            } else if (time.equalsIgnoreCase("30-60 min")) {
                 sb.append("time >= 30 AND time <= 60");
-            } else if (time.equalsIgnoreCase("over 60")) {
+            } else if (time.equalsIgnoreCase("over 60 min")) {
                 sb.append("time > 60");
             } else { sb.delete(sb.length() - 5, sb.length()); }
 

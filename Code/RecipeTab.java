@@ -163,7 +163,7 @@ public class RecipeTab extends TabFrameTemplate {
         
         if (currentRecipe.isEmpty()) {
             // System.out.println("Empty recipe.Recipe");
-            JOptionPane.showMessageDialog(mainPanel, "Empty recipe.Recipe.");
+            JOptionPane.showMessageDialog(mainPanel, "Empty Recipe.");
         } else {
            int foundRecipeIndex = -1;
            for (int i = 0; i < mainGUI.favoriteRecipes.size(); i++) {
@@ -181,7 +181,7 @@ public class RecipeTab extends TabFrameTemplate {
             else {
                 // recipe is already in the list; don't save
                 // probably should notify the user
-                JOptionPane.showMessageDialog(mainPanel, "recipe.Recipe already favorited.");
+                JOptionPane.showMessageDialog(mainPanel, "Recipe already favorited.");
                 // System.out.println("recipe.Recipe already favorited");
             }
         }

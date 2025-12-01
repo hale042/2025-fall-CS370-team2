@@ -59,7 +59,7 @@ public class CookItGUI extends JFrame {
         // tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
         
         JComponent recipePanel = recipeTab.getAsPanel();
-        tabbedPane.addTab("recipe.Recipe", null, recipePanel, "Does twice as much nothing");
+        tabbedPane.addTab("Recipe", null, recipePanel, "Does twice as much nothing");
         // tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
         
         JComponent notesPanel = noteTab.getAsPanel();

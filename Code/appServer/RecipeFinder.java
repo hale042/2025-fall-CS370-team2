@@ -14,7 +14,6 @@ public class RecipeFinder {
 
     public RecipeFinder(){
         DB = new Database_Manager();
-        RecipeApiData recipeAPIdata = new RecipeApiData();
     }
 
     public void addRecipe(Recipe recipe){
