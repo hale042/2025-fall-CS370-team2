@@ -42,8 +42,7 @@ public class main { //testing without api use
     }
 }
 
- */
-/*
+
 public class recipe.Ingredient {
     private String name;
     

@@ -3,6 +3,7 @@ package appServer;
 import dataAccess.Database_Manager;
 import recipe.*;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,7 @@ public class RecipeFinder {
 
     public RecipeFinder(){
         DB = new Database_Manager();
+        RecipeApiData recipeAPIdata = new RecipeApiData();
     }
 
     public void addRecipe(Recipe recipe){

@@ -1,3 +1,4 @@
+import appServer.RecipeApiData;
 import recipe.Recipe;
 
 import java.awt.BorderLayout;

@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import appServer.RecipeApiData;
 import recipe.*;
 
 public class Database_Manager {
@@ -42,6 +43,10 @@ public class Database_Manager {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+        }
+        if(isTableEmpty()) {
+            RecipeApiData recipeApiData = new RecipeApiData();
+            for(int i=0; i<100; i++) this.saveRecipe(RecipeApiData.getRandomRecipe());
         }
     }
     public Database_Manager(String t) {
@@ -259,5 +264,16 @@ public class Database_Manager {
             sb.append(ing.getName().replaceAll(" ", "_")).append(" ");
         }
         return sb.toString();
+    }
+    private boolean isTableEmpty() {
+        String sql = "SELECT COUNT(*) FROM " + table;
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            return rs.getInt(1) == 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return true; // assume empty on failure
+        }
     }
 }
