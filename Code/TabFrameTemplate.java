@@ -11,18 +11,18 @@ public class TabFrameTemplate {
     // public TabFrameTemplate() {}
 
     public void initializeTabContents() {
-        this.mainPanel.setLayout(new GridLayout(1, 1));
+        mainPanel.setLayout(new GridLayout(1, 1));
         
         JLabel filler = new JLabel(this.sample_text);
         filler.setHorizontalAlignment(JLabel.CENTER);
         
-        this.mainPanel.add(filler);
+        mainPanel.add(filler);
     }
 
     public JComponent getAsPanel() {
         initializeTabContents();
         
-        return this.mainPanel;
+        return mainPanel;
     }
 
     public static void main(String args[]) {

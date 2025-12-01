@@ -4,6 +4,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
+// import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -27,14 +28,23 @@ import java.util.List;
 import java.io.File;
 
 public class SearchTab extends TabFrameTemplate {
+    final private int NEWRECIPETABINDEX = 4;
+
+    private CookItGUI mainGUI;
     private JTextField ingredientField;
     private JComboBox<String> skillFilter;
     private JComboBox<String> timeFilter;
     private JTextArea resultArea;
-    private JButton searchButton, clearButton, viewButton, addImageButton;
+    private JButton searchButton, clearButton, viewButton, addImageButton, newRecipeButton;
     private JLabel imageLabel;
     private RecipeFinder finder;
     private Recipe selectedRecipe;
+
+    private Font tabFont = new Font("Segoe UI", Font.PLAIN, 13);
+
+    public SearchTab(CookItGUI mainGUI) {
+        this.mainGUI = mainGUI;
+    }
 
     @Override
     public void initializeTabContents() {
@@ -43,7 +53,7 @@ public class SearchTab extends TabFrameTemplate {
         setupSampleData();  // temporary local data
 
         // Layout setup
-        this.mainPanel.setLayout(new BorderLayout(10, 10));
+        mainPanel.setLayout(new BorderLayout(10, 10));
         // setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // setPreferredSize(new Dimension(800, 600));
 
@@ -68,15 +78,15 @@ public class SearchTab extends TabFrameTemplate {
         topPanel.add(searchButton);
         topPanel.add(clearButton);
 
-        this.mainPanel.add(topPanel, BorderLayout.NORTH);
+        mainPanel.add(topPanel, BorderLayout.NORTH);
 
         // Center panel / search result panel 
         resultArea = new JTextArea();
         resultArea.setEditable(false);
-        resultArea.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        resultArea.setFont(tabFont);
         JScrollPane scrollPane = new JScrollPane(resultArea);
         scrollPane.setBorder(new TitledBorder("Matching Recipes"));
-        this.mainPanel.add(scrollPane, BorderLayout.CENTER);
+        mainPanel.add(scrollPane, BorderLayout.CENTER);
 
         // Right panel / details panel
         JPanel rightPanel = new JPanel();
@@ -89,20 +99,24 @@ public class SearchTab extends TabFrameTemplate {
         imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
         imageLabel.setPreferredSize(new Dimension(200, 200));
         imageLabel.setBorder(new LineBorder(Color.GRAY));
-
+        newRecipeButton = new JButton("New Recipe");
+        
         rightPanel.add(viewButton);
         rightPanel.add(Box.createVerticalStrut(10));
         rightPanel.add(addImageButton);
         rightPanel.add(Box.createVerticalStrut(10));
         rightPanel.add(imageLabel);
+        rightPanel.add(Box.createVerticalStrut(10));
+        rightPanel.add(newRecipeButton);
 
-        this.mainPanel.add(rightPanel, BorderLayout.EAST);
+        mainPanel.add(rightPanel, BorderLayout.EAST);
 
         //Event listeners for buttons
         searchButton.addActionListener(e -> findRecipes());
         clearButton.addActionListener(e -> clearSearch());
         viewButton.addActionListener(e -> showRecipeDetails());
         addImageButton.addActionListener(e -> chooseImage());
+        newRecipeButton.addActionListener(e -> openNewRecipeTab());
 
         // pack();
         // setLocationRelativeTo(null);
@@ -131,7 +145,7 @@ public class SearchTab extends TabFrameTemplate {
     private void findRecipes() {
         String inputText = ingredientField.getText().trim().toLowerCase();
         if (inputText.isEmpty()) {
-            JOptionPane.showMessageDialog(this.mainPanel, "Please enter at least one ingredient.");
+            JOptionPane.showMessageDialog(mainPanel, "Please enter at least one ingredient.");
             return;
         }
 
@@ -161,7 +175,7 @@ public class SearchTab extends TabFrameTemplate {
                     int index = Integer.parseInt(choice) - 1;
                     if (index >= 0 && index < results.size()) {
                         selectedRecipe = results.get(index);
-                        JOptionPane.showMessageDialog(this.mainPanel, "Selected: " + selectedRecipe.getName());
+                        JOptionPane.showMessageDialog(mainPanel, "Selected: " + selectedRecipe.getName());
                     }
                 } catch (NumberFormatException ignored) {}
             }
@@ -177,7 +191,7 @@ public class SearchTab extends TabFrameTemplate {
 
     private void showRecipeDetails() {
         if (selectedRecipe == null) {
-            JOptionPane.showMessageDialog(this.mainPanel, "Please select a recipe first.");
+            JOptionPane.showMessageDialog(mainPanel, "Please select a recipe first.");
             return;
         }
 
@@ -193,13 +207,13 @@ public class SearchTab extends TabFrameTemplate {
 
         JScrollPane pane = new JScrollPane(details);
         pane.setPreferredSize(new Dimension(400, 300));
-        JOptionPane.showMessageDialog(this.mainPanel, pane, "Recipe Details", JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showMessageDialog(mainPanel, pane, "Recipe Details", JOptionPane.PLAIN_MESSAGE);
     }
 
     private void chooseImage() {
         JFileChooser chooser = new JFileChooser();
         chooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("PNG Images", "png"));
-        int result = chooser.showOpenDialog(this.mainPanel);
+        int result = chooser.showOpenDialog(mainPanel);
         if (result == JFileChooser.APPROVE_OPTION) {
             File file = chooser.getSelectedFile();
             ImageIcon icon = new ImageIcon(file.getAbsolutePath());
@@ -208,14 +222,19 @@ public class SearchTab extends TabFrameTemplate {
         }
     }
 
-    public static void main(String args[]) {
-        SearchTab gui = new SearchTab();
+    private void openNewRecipeTab() {
+        mainGUI.switchTab(NEWRECIPETABINDEX);
+        // GUIInterface.switchTab(NEWRECIPETABINDEX);
+    }
 
-        //Schedule a job for the event-dispatching thread("Swing data structures aren't thread-safe")
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                System.out.println(gui.getAsPanel());
-            }
-        });
+    public static void main(String args[]) {
+        // SearchTab gui = new SearchTab();
+
+        // //Schedule a job for the event-dispatching thread("Swing data structures aren't thread-safe")
+        // javax.swing.SwingUtilities.invokeLater(new Runnable() {
+        //     public void run() {
+        //         System.out.println(gui.getAsPanel());
+        //     }
+        // });
     }
 }

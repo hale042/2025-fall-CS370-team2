@@ -8,10 +8,12 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 
 public class NoteTab extends TabFrameTemplate {
     private JTextField noteTitleField;
@@ -22,14 +24,14 @@ public class NoteTab extends TabFrameTemplate {
 
     // private String savedNotes[] = {"Shopping List", "Sandwich Ideas", "Add-Ins For That One Salad", "Foods to try", "test5", "test6"};
     // private Note savedNotes[] = {new Note("Shopping List", " - cabbage\n - apples\n - a half gallon of milk"), new Note("Sandwich Ideas", ""), new Note("Add-Ins For That One Salad", ""), new Note("Foods to try", ""), new Note("test5", ""), new Note("test6", "")};
-    private ArrayList<Note> savedNotes = new ArrayList<Note>(Arrays.asList(new Note("Shopping List", " - cabbage\n - apples\n - a half gallon of milk"), new Note("Sandwich Ideas", ""), new Note("Add-Ins For That One Salad", ""), new Note("Foods to try", ""), new Note("test5", ""), new Note("test6", "")));
+    private List<Note> savedNotes = new ArrayList<Note>(Arrays.asList(new Note("Shopping List", " - cabbage\n - apples\n - a half gallon of milk"), new Note("Sandwich Ideas", ""), new Note("Add-Ins For That One Salad", ""), new Note("Foods to try", ""), new Note("test5", ""), new Note("test6", "")));
     private Note currentNote;
 
     private JList<String> notesList = new JList<>();
 
     @Override
     public void initializeTabContents() {
-        this.mainPanel.setLayout(new BorderLayout(10, 10));
+        mainPanel.setLayout(new BorderLayout(10, 10));
         
         // list of notes to view
         notesListPanel = new JPanel();
@@ -50,13 +52,13 @@ public class NoteTab extends TabFrameTemplate {
         JButton newNoteButton = new JButton("New");
         JButton deleteNoteButton = new JButton("Delete");
         
-        listButtons.add(openNoteButton, BorderLayout.SOUTH);
-        listButtons.add(newNoteButton, BorderLayout.SOUTH);
-        listButtons.add(deleteNoteButton, BorderLayout.SOUTH);
+        listButtons.add(openNoteButton);
+        listButtons.add(newNoteButton);
+        listButtons.add(deleteNoteButton);
 
         notesListPanel.add(listButtons, BorderLayout.SOUTH);
         
-        this.mainPanel.add(notesListPanel, BorderLayout.WEST);
+        mainPanel.add(notesListPanel, BorderLayout.WEST);
         
         // note editing/viewing interface
         noteEditorPanel = new JPanel();
@@ -86,7 +88,7 @@ public class NoteTab extends TabFrameTemplate {
         
         noteEditorPanel.add(noteControlsPanel, BorderLayout.SOUTH);
         
-        this.mainPanel.add(noteEditorPanel, BorderLayout.CENTER);
+        mainPanel.add(noteEditorPanel, BorderLayout.CENTER);
 
         // binding the buttons to actions
         saveButton.addActionListener(e -> saveNote());
@@ -96,8 +98,10 @@ public class NoteTab extends TabFrameTemplate {
         newNoteButton.addActionListener(e -> newNote());
     }
 
-    public void setNoteList(ArrayList<Note> Notes) {
-        ArrayList<String> temp = new ArrayList<>();
+    public void setNoteList(List<Note> Notes) {
+        savedNotes = Notes;
+        // take in an list of notes, put their titles in a list display it on the page
+        List<String> temp = new ArrayList<>();
         for (Note note : Notes) {
             temp.add(note.title);
         }
@@ -113,71 +117,83 @@ public class NoteTab extends TabFrameTemplate {
         String contents = noteContentsField.getText();
 
         currentNote = new Note(title, contents);
-        System.out.println(currentNote.title + " - " + currentNote.contents);
+        // System.out.println(currentNote.title + " - " + currentNote.contents);
 
         if (currentNote.isEmpty()) {
-            System.out.println("Empty Note");
+            // System.out.println("Empty Note");
+            JOptionPane.showMessageDialog(mainPanel, "Empty Note.");
         } else {
+            // System.out.println(currentNote.title + " - " + currentNote.title.length());
+
             /* 
                 check if the note is already in the list(compare objects? compare titles?) before saving it
                 
                 can't get it to work? it keeps saying that the objects and even strings are not equal
             */
             int foundNoteIndex = -1;
-
             for (int i = 0; i < savedNotes.size(); i++) {
                 // System.out.println(savedNotes.get(i).title + " - " + currentNote.title);
-                // System.out.println((currentNote.title == savedNotes.get(i).title));
-                System.out.println((currentNote.title.length() == savedNotes.get(i).title.length()));
                 // if(currentNote.equals(savedNotes.get(i))) {
-                if(currentNote.title == savedNotes.get(i).title) {
+                if(currentNote.title.equals(savedNotes.get(i).title)) {
                     foundNoteIndex = i;
                 }
             }
     
-            if (foundNoteIndex == -1) {
+            if (foundNoteIndex == -1) { // if we didn't find a note with the same name, save the note
                 savedNotes.add(currentNote);
                 setNoteList(savedNotes);
             }
-            else {
+            // else if (!currentNote.contents.equals(savedNotes.get(foundNoteIndex).contents)) {
+            //     // if we found a note with the same name, but different contents, save with number added
+            // }
+            else { // if we find a note with the same name, overwrite its contents with the current one
                 savedNotes.set(foundNoteIndex, currentNote);
             }
         }
     }
 
     public void clearNote() {
-        // System.out.println("This is a test of the clear function.");
-
+        // set the note fields to an empty string
         noteTitleField.setText("");
         noteContentsField.setText("");
         currentNote = new Note("", "");
     }
 
     public void deleteNote() {
-        // System.out.println("This is a test of the delete note function.");
+        // delete the note selected from the list and update the displayed list
         int noteIndex = notesList.getSelectedIndex();
-        String noteTitle = (String) notesList.getSelectedValue();
-        System.out.println("Selected note index: " + noteIndex + " and title: " + noteTitle);
+        // String noteTitle = (String) notesList.getSelectedValue();
+        // System.out.println("Selected note index: " + noteIndex + " and title: " + noteTitle);
 
-        savedNotes.remove(noteIndex);
-        setNoteList(savedNotes);
+        if (noteIndex == -1) {
+            JOptionPane.showMessageDialog(mainPanel, "Please select a note.");
+        }
+        else {
+            savedNotes.remove(noteIndex);
+            setNoteList(savedNotes);
+        }
     }
 
     public void openNote() {
         // System.out.println("This is a test of the open note function.");
         // https://examples.javacodegeeks.com/java-development/desktop-java/swing/jlist/get-selected-value-from-jlist/
         int noteIndex = notesList.getSelectedIndex();
-        String noteTitle = (String) notesList.getSelectedValue();
-        System.out.println("Selected note index: " + noteIndex + " and title: " + noteTitle);
+        // String noteTitle = (String) notesList.getSelectedValue();
+        // System.out.println("Selected note index: " + noteIndex + " and title: " + noteTitle);
 
-        // currentNote = savedNotes[noteIndex];
-        currentNote = savedNotes.get(noteIndex);
-        noteTitleField.setText(currentNote.title);
-        noteContentsField.setText(currentNote.contents);
+        if (noteIndex == -1) {
+            JOptionPane.showMessageDialog(mainPanel, "Please select a note.");
+        }
+        else {
+            // currentNote = savedNotes[noteIndex];
+            currentNote = savedNotes.get(noteIndex);
+            noteTitleField.setText(currentNote.title);
+            noteContentsField.setText(currentNote.contents);
+        }
     }
 
     public void newNote() {
-        System.out.println("This is a test of the new note function.");
+        // System.out.println("This is a test of the new note function.");
         clearNote();
     }
 }

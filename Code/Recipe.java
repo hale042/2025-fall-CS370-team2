@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class Recipe {
@@ -7,6 +8,14 @@ public class Recipe {
     private String instructions;
     private String skillLevel;
     private int cookTime; // in minutes
+
+    public Recipe() {
+        this.name = null;
+        this.ingredients = null;
+        this.instructions = null;
+        this.skillLevel = null;
+        this.cookTime = 0;
+    }
 
     public Recipe(String name, List<Ingredient> ingredients, String instructions, String skillLevel, int cookTime) {
         this.name = name;
@@ -26,6 +35,26 @@ public class Recipe {
         StringBuilder sb = new StringBuilder();
         for (Ingredient ing : ingredients) sb.append("• ").append(ing.getName()).append("\n");
         return sb.toString();
+    }
+    
+    public boolean isEmpty() {
+        // return (title == null && contents == null) || (title == "" && contents == "");
+        // return (name.isBlank() && ingredients.isEmpty() && instructions.isBlank() && (cookTime == 0) && skillLevel.isBlank());
+        return ((name == null) && (ingredients == null) && (instructions == null) && (cookTime == 0) && (skillLevel == null));
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+
+        if (!(obj instanceof Note)) {
+            return false;
+        }
+
+        Recipe recipeObj = (Recipe) obj;
+        return (recipeObj.getName().equals(name) && recipeObj.getIngredients().equals(ingredients) && recipeObj.getInstructions().equals(instructions) && (recipeObj.getCookTime() == cookTime) && recipeObj.getSkillLevel().equals(skillLevel));
     }
 }
 

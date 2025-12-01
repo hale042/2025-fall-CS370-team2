@@ -1,4 +1,6 @@
 import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.SwingUtilities;
 import javax.swing.JComponent;
@@ -10,8 +12,18 @@ import javax.swing.JTabbedPane;
  * Version 1.0
  * Developed by Team 2 (Luke Hale, Lundon Dotson, Nikita Sharma, Ricky Arnold)
  */
+// public class CookItGUI extends JFrame implements GUIInterface {
 public class CookItGUI extends JFrame {
-    private JFrame mainFrame = new JFrame("My First GUI"); // main window
+    private JFrame mainFrame = new JFrame("CookIt!"); // main window
+    protected JTabbedPane tabbedPane;
+    
+    protected SearchTab searchTab = new SearchTab(this);
+    protected WelcomeTab welcomeTab = new WelcomeTab(this);
+    protected RecipeTab recipeTab = new RecipeTab(this);
+    protected NewRecipeTab NewRecipeTab = new NewRecipeTab(this);
+    protected NoteTab noteTab = new NoteTab();
+
+    protected List<Recipe> favoriteRecipes = new ArrayList<Recipe>();
 
     // frame size
     int frameWidth = 300;
@@ -25,13 +37,14 @@ public class CookItGUI extends JFrame {
         this.mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // what function to run when the window is closed
 
         // tabs
-        SearchTab searchTab = new SearchTab();
-        WelcomeTab welcomeTab = new WelcomeTab();
-        RecipeTab recipeTab = new RecipeTab();
-        NoteTab noteTab = new NoteTab();
+        // SearchTab searchTab = new SearchTab(this);
+        // WelcomeTab welcomeTab = new WelcomeTab();
+        // RecipeTab recipeTab = new RecipeTab();
+        // NewRecipeTab NewRecipeTab = new NewRecipeTab();
+        // NoteTab noteTab = new NoteTab();
 
         // tabbed panes?
-        JTabbedPane tabbedPane = new JTabbedPane();
+        tabbedPane = new JTabbedPane();
 
         // JComponent mainTab = gui_test.makeTextPanel("Panel #1");
         JComponent startPanel = welcomeTab.getAsPanel();
@@ -51,6 +64,10 @@ public class CookItGUI extends JFrame {
         // tabbedPane.addTab("Tab 3", icon, panel3, "Still does nothing");
         tabbedPane.addTab("Notes", null, notesPanel, "Still does nothing");
         // tabbedPane.setMnemonicAt(2, KeyEvent.VK_3);
+
+        JComponent newRecipePanel = NewRecipeTab.getAsPanel();
+        tabbedPane.addTab("", null, newRecipePanel, "Does twice as much nothing");
+        tabbedPane.setEnabledAt(4, false);
         
         // no more settings tab
         // JComponent settingsTab = gui_test.makeTextPanel("Panel #4 (has a preferred size of 410 x 50).");
@@ -67,6 +84,10 @@ public class CookItGUI extends JFrame {
         // tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 
         this.mainFrame.setVisible(true);
+    }
+
+    public void switchTab(int tabIndex) {
+        tabbedPane.setSelectedIndex(tabIndex);
     }
 
     public static void main(String[] args) {
