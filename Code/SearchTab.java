@@ -211,7 +211,7 @@ public class SearchTab extends TabFrameTemplate {
 
         JScrollPane pane = new JScrollPane(details);
         pane.setPreferredSize(new Dimension(400, 300));
-        JOptionPane.showMessageDialog(mainPanel, pane, "Recipe Details", JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showMessageDialog(mainPanel, pane, " Recipe Details", JOptionPane.PLAIN_MESSAGE);
     }
 
     private void chooseImage() {
