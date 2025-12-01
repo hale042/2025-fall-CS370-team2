@@ -219,7 +219,7 @@ public class RecipeApiData {
 
             //loop through every line and append to stringbuilder
             while (scanner.hasNext()) {
-                resultJson.append(scanner.next());
+                resultJson.append(scanner.nextLine()); //fix weird spacing issue
             }
 
             //close
