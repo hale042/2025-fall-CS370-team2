@@ -1,3 +1,5 @@
+package recipe;
+
 public class Ingredient {
     private String name;
     // private double amount; 
@@ -9,7 +11,7 @@ public class Ingredient {
         this.amount = "0";
     }
 
-    // public Ingredient(String name, double amount) {
+    // public recipe.Ingredient(String name, double amount) {
     public Ingredient(String name, String amount) {
         this.name = name.toLowerCase();
         this.amount = amount;

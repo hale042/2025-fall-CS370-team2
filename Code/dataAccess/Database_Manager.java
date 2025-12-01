@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import cookit.Recipe;
+import recipe.*;
 
 public class Database_Manager {
     Connection connection;
@@ -14,6 +14,39 @@ public class Database_Manager {
     public Database_Manager() {
         String dbName = "recipes.db";
         table = "recipe_table";
+        try {
+            connection = DriverManager.getConnection("jdbc:sqlite:" + dbName);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        Statement statement = null;
+        try {
+            assert connection != null;
+            statement = connection.createStatement();
+            String sql = "CREATE TABLE IF NOT EXISTS " + table + " (" +
+                    "name Text NOT NULL," +
+                    "ingredients TEXT," +
+                    "instructions TEXT," +
+                    "skill TEXT," +
+                    "time INTEGER," +
+                    "UNIQUE(name))";
+            statement.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    public Database_Manager(String t) {
+        String dbName = "recipes.db";
+        table = t;
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:" + dbName);
         } catch (SQLException e) {
@@ -63,8 +96,8 @@ public class Database_Manager {
                 String skillLevel = resultSet.getString("skill");
                 int cookTime = resultSet.getInt("time");
 
-                List<String> ingredientsList = new ArrayList<>(List.of(ingredients.split(" ")));
-                Recipe recipe = new Recipe(name, ingredientsList, instructions, skillLevel, cookTime);
+                List<Ingredient> ingredientList = ingredientsToList(ingredients);
+                Recipe recipe = new Recipe(name, ingredientList, instructions, skillLevel, cookTime);
 
                 recipes.add(recipe);
             }
@@ -108,8 +141,8 @@ public class Database_Manager {
                 String skillLevel = resultSet.getString("skill");
                 int cookTime = resultSet.getInt("time");
 
-                List<String> ingredientsList = new ArrayList<>(List.of(ingredients.split(" ")));
-                Recipe recipe = new Recipe(name, ingredientsList, instructions, skillLevel, cookTime);
+                List<Ingredient> ingredientList = ingredientsToList(ingredients);
+                Recipe recipe = new Recipe(name, ingredientList, instructions, skillLevel, cookTime);
 
                 recipes.add(recipe);
             }
@@ -163,8 +196,8 @@ public class Database_Manager {
                 String skillLevel = resultSet.getString("skill");
                 int cookTime = resultSet.getInt("time");
 
-                List<String> ingredientsList = this.ingredientsToList(ingredients_string);
-                Recipe recipe = new Recipe(name, ingredientsList, instructions, skillLevel, cookTime);
+                List<Ingredient> ingredientList = ingredientsToList(ingredients_string);
+                Recipe recipe = new Recipe(name, ingredientList, instructions, skillLevel, cookTime);
 
                 recipes.add(recipe);
             }
@@ -214,16 +247,16 @@ public class Database_Manager {
         return true;
     }
 
-    private List<String> ingredientsToList(String ingredients) {
+    private List<Ingredient> ingredientsToList(String ingredients) {
         List<String> list = new ArrayList<>(List.of(ingredients.split(" ")));
-        for(String ing : list) ing = ing.replaceAll("_", " ");
-        return list;
+        List<Ingredient> ingredientList = new ArrayList<>();
+        for(String ing : list) ingredientList.add(new Ingredient(ing.replaceAll("_", " ")));
+        return ingredientList;
     }
-    private String ingredientsToString(List<String> ingredients) {
+    private String ingredientsToString(List<Ingredient> ingredients) {
         StringBuilder sb = new StringBuilder();
-        for (String ing : ingredients) {
-            ing = ing.replaceAll(" ", "_");
-            sb.append(ing).append(" ");
+        for (Ingredient ing : ingredients) {
+            sb.append(ing.getName().replaceAll(" ", "_")).append(" ");
         }
         return sb.toString();
     }

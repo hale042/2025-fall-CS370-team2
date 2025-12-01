@@ -1,3 +1,5 @@
+import recipe.Recipe;
+
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 
 /**
- * Cook It! - Front-End GUI for Recipe Finder Application
+ * Cook It! - Front-End GUI for recipe.Recipe Finder Application
  * Version 1.0
  * Developed by Team 2 (Luke Hale, Lundon Dotson, Nikita Sharma, Ricky Arnold)
  */
@@ -57,7 +59,7 @@ public class CookItGUI extends JFrame {
         // tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
         
         JComponent recipePanel = recipeTab.getAsPanel();
-        tabbedPane.addTab("Recipe", null, recipePanel, "Does twice as much nothing");
+        tabbedPane.addTab("recipe.Recipe", null, recipePanel, "Does twice as much nothing");
         // tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
         
         JComponent notesPanel = noteTab.getAsPanel();

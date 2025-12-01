@@ -1,4 +1,6 @@
-import javax.swing.JMenuItem; //add more
+import recipe.Ingredient;
+import recipe.Recipe;
+import appServer.*;
 import java.util.List;
 import java.util.*;
 
@@ -8,7 +10,7 @@ import java.util.*;
 //way to store the recipes (the name, ingredients, steps, difficulty rating)
 //match recipes with users input
 
-
+/*
 public class main { //testing without api use
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -39,11 +41,13 @@ public class main { //testing without api use
         }
     }
 }
+
+ */
 /*
-public class Ingredient {
+public class recipe.Ingredient {
     private String name;
     
-    public Ingredient(String name) {
+    public recipe.Ingredient(String name) {
         this.name = name.toLowerCase();
     }
     
@@ -52,12 +56,12 @@ public class Ingredient {
     }
 }
 
-public class Recipe {
+public class recipe.Recipe {
     private String name;
-    private List<Ingredient> ingredients = new ArrayList<>();
+    private List<recipe.Ingredient> ingredients = new ArrayList<>();
     private String instructions;
 
-    public Recipe(String name, List<Ingredient> ingredients, String instructions) {
+    public recipe.Recipe(String name, List<recipe.Ingredient> ingredients, String instructions) {
         this.name = name;
         this.ingredients = ingredients;
         this.instructions = instructions;
@@ -75,16 +79,16 @@ public class Recipe {
 import java.util.*;
 
 public class RecipeFinder {
-    private List<Recipe> recipes = new ArrayList<>();
+    private List<recipe.Recipe> recipes = new ArrayList<>();
     
-    public void addRecipe(Recipe recipe) {
+    public void addRecipe(recipe.Recipe recipe) {
         recipes.add(recipe);
     }
     
-    public List<Recipe> findRecipes(List<String> availableIngredients) {
-        List<Recipe> matched = new ArrayList<>();
+    public List<recipe.Recipe> findRecipes(List<String> availableIngredients) {
+        List<recipe.Recipe> matched = new ArrayList<>();
         
-        for (Recipe recipe : recipes) {
+        for (recipe.Recipe recipe : recipes) {
             boolean canMake = recipe.getIngredients().stream()
             .allMatch(ing -> availableIngredients.contains(ing.getName()));
             if (canMake) {

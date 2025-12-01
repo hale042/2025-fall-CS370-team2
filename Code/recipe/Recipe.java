@@ -1,4 +1,7 @@
-import java.util.ArrayList;
+package recipe;
+
+import note.Note;
+
 import java.util.List;
 
 public class Recipe {

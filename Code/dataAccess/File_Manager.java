@@ -1,6 +1,6 @@
 package dataAccess;
 
-import cookit.Recipe;
+import recipe.*;
 
 import java.io.*;
 import java.util.ArrayList;

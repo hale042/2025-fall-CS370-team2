@@ -1,3 +1,7 @@
+import recipe.Ingredient;
+import recipe.Recipe;
+import appServer.*;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -91,15 +95,15 @@ public class SearchTab extends TabFrameTemplate {
         // Right panel / details panel
         JPanel rightPanel = new JPanel();
         rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
-        rightPanel.setBorder(new TitledBorder("Recipe Details"));
+        rightPanel.setBorder(new TitledBorder("recipe.Recipe Details"));
 
-        viewButton = new JButton("View Selected Recipe");
+        viewButton = new JButton("View Selected recipe.Recipe");
         addImageButton = new JButton("Upload PNG");
         imageLabel = new JLabel();
         imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
         imageLabel.setPreferredSize(new Dimension(200, 200));
         imageLabel.setBorder(new LineBorder(Color.GRAY));
-        newRecipeButton = new JButton("New Recipe");
+        newRecipeButton = new JButton("New recipe.Recipe");
         
         rightPanel.add(viewButton);
         rightPanel.add(Box.createVerticalStrut(10));
@@ -207,7 +211,7 @@ public class SearchTab extends TabFrameTemplate {
 
         JScrollPane pane = new JScrollPane(details);
         pane.setPreferredSize(new Dimension(400, 300));
-        JOptionPane.showMessageDialog(mainPanel, pane, "Recipe Details", JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showMessageDialog(mainPanel, pane, "recipe.Recipe Details", JOptionPane.PLAIN_MESSAGE);
     }
 
     private void chooseImage() {

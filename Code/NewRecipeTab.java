@@ -1,3 +1,6 @@
+import recipe.Ingredient;
+import recipe.Recipe;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -22,7 +25,7 @@ public class NewRecipeTab extends TabFrameTemplate {
     private CookItGUI mainGUI;
     private final int SEARCHTABINDEX = 1;
     
-    // private Recipe newRecipe = new Recipe(null, null, null, null, 0);
+    // private recipe.Recipe newRecipe = new recipe.Recipe(null, null, null, null, 0);
     
     private JPanel titlePanel, ingredientsPanel, instructionsPanel, skillNTimePanel, controlsPanel;
     private JTextArea ingredientsInputArea, instructionsInputArea;
@@ -48,7 +51,7 @@ public class NewRecipeTab extends TabFrameTemplate {
 
         // title
         titlePanel = new JPanel(new BorderLayout(10, 10));
-        titlePanel.setBorder(new TitledBorder("Recipe Title"));
+        titlePanel.setBorder(new TitledBorder("recipe.Recipe Title"));
         titlePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 10)); // set max height for title panel
 
         titleInput = new JTextField();
@@ -130,9 +133,9 @@ public class NewRecipeTab extends TabFrameTemplate {
             ingredientsList.add(new Ingredient(str));
         }
         
-        // newRecipe = new Recipe(recipeName, ingredientsList, instructionsString, recipeSkill, 0);
+        // newRecipe = new recipe.Recipe(recipeName, ingredientsList, instructionsString, recipeSkill, 0);
         Recipe recipeToSave = new Recipe(recipeName, ingredientsList, instructionsString, recipeSkill, recipeTime);
-        // Recipe recipe = new Recipe(recipeName, ingredients, instructionsString, recipeSkill, recipeTime); // figure out the time thing
+        // recipe.Recipe recipe = new recipe.Recipe(recipeName, ingredients, instructionsString, recipeSkill, recipeTime); // figure out the time thing
         // System.out.println(newRecipe.getName());
 
         // then "return" recipe i.e. send it to the file management system

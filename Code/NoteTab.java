@@ -1,3 +1,5 @@
+import note.Note;
+
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -23,7 +25,7 @@ public class NoteTab extends TabFrameTemplate {
     private Font pageFont = new Font("Segoe UI", Font.PLAIN, 15);
 
     // private String savedNotes[] = {"Shopping List", "Sandwich Ideas", "Add-Ins For That One Salad", "Foods to try", "test5", "test6"};
-    // private Note savedNotes[] = {new Note("Shopping List", " - cabbage\n - apples\n - a half gallon of milk"), new Note("Sandwich Ideas", ""), new Note("Add-Ins For That One Salad", ""), new Note("Foods to try", ""), new Note("test5", ""), new Note("test6", "")};
+    // private note.Note savedNotes[] = {new note.Note("Shopping List", " - cabbage\n - apples\n - a half gallon of milk"), new note.Note("Sandwich Ideas", ""), new note.Note("Add-Ins For That One Salad", ""), new note.Note("Foods to try", ""), new note.Note("test5", ""), new note.Note("test6", "")};
     private List<Note> savedNotes = new ArrayList<Note>(Arrays.asList(new Note("Shopping List", " - cabbage\n - apples\n - a half gallon of milk"), new Note("Sandwich Ideas", ""), new Note("Add-Ins For That One Salad", ""), new Note("Foods to try", ""), new Note("test5", ""), new Note("test6", "")));
     private Note currentNote;
 
@@ -63,12 +65,12 @@ public class NoteTab extends TabFrameTemplate {
         // note editing/viewing interface
         noteEditorPanel = new JPanel();
         noteEditorPanel.setLayout(new BorderLayout(10, 10));
-        noteEditorPanel.setBorder(new TitledBorder("Current Note"));
+        noteEditorPanel.setBorder(new TitledBorder("Current note.Note"));
         
         // title
         noteTitleField = new JTextField();
         noteTitleField.setFont(pageFont);
-        noteTitleField.setToolTipText("Note Title");
+        noteTitleField.setToolTipText("note.Note Title");
         noteEditorPanel.add(noteTitleField, BorderLayout.NORTH);
 
         // contents
@@ -80,7 +82,7 @@ public class NoteTab extends TabFrameTemplate {
         // save, cancel, etc. buttons
         noteControlsPanel = new JPanel(new FlowLayout());
 
-        JButton saveButton = new JButton("Save Note");
+        JButton saveButton = new JButton("Save note.Note");
         JButton clearButton = new JButton("Clear");
 
         noteControlsPanel.add(saveButton);
@@ -120,8 +122,8 @@ public class NoteTab extends TabFrameTemplate {
         // System.out.println(currentNote.title + " - " + currentNote.contents);
 
         if (currentNote.isEmpty()) {
-            // System.out.println("Empty Note");
-            JOptionPane.showMessageDialog(mainPanel, "Empty Note.");
+            // System.out.println("Empty note.Note");
+            JOptionPane.showMessageDialog(mainPanel, "Empty note.Note.");
         } else {
             // System.out.println(currentNote.title + " - " + currentNote.title.length());
 

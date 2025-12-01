@@ -1,3 +1,5 @@
+package note;
+
 public class Note {
     public String title = null;
     public String contents = null;

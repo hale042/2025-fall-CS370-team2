@@ -1,3 +1,5 @@
+import recipe.Recipe;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -79,7 +81,7 @@ public class WelcomeTab extends TabFrameTemplate {
 
         openButton = new JButton("Open");
         deleteButton = new JButton("Delete");
-        randomRecipeButton = new JButton("Random Recipe");
+        randomRecipeButton = new JButton("Random recipe.Recipe");
 
         buttonsPanel.add(openButton);
         buttonsPanel.add(deleteButton);
@@ -130,8 +132,8 @@ public class WelcomeTab extends TabFrameTemplate {
         // System.out.println("Selected note index: " + recipeIndex + " and title: " + recipeName);
         
         if (recipeIndex == -1) {
-            // System.out.println("No Recipe Selected");
-            JOptionPane.showMessageDialog(this.mainPanel, "No Recipe Selected.");
+            // System.out.println("No recipe.Recipe Selected");
+            JOptionPane.showMessageDialog(this.mainPanel, "No recipe.Recipe Selected.");
         }
         else {
             mainGUI.favoriteRecipes.remove(recipeIndex);
@@ -143,8 +145,8 @@ public class WelcomeTab extends TabFrameTemplate {
         int recipeIndex = favoritesJList.getSelectedIndex();
         
         if (recipeIndex == -1) {
-            // System.out.println("No Recipe Selected");
-            JOptionPane.showMessageDialog(this.mainPanel, "No Recipe Selected.");
+            // System.out.println("No recipe.Recipe Selected");
+            JOptionPane.showMessageDialog(this.mainPanel, "No recipe.Recipe Selected.");
         }
         else {
             Recipe selectedRecipe = mainGUI.favoriteRecipes.get(recipeIndex); // get recipe from selection
@@ -154,7 +156,7 @@ public class WelcomeTab extends TabFrameTemplate {
     }
 
     public void openRandomRecipe() {
-        System.out.println("Random Recipe");
+        System.out.println("Random recipe.Recipe");
         
         // get random recipe from API call
         Recipe selectedRecipe = RecipeApiData.getRandomRecipe();

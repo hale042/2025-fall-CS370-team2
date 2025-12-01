@@ -1,6 +1,8 @@
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import recipe.Ingredient;
+import recipe.Recipe;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -53,7 +55,7 @@ public class RecipeApiData {
     }
 
     public static Recipe getRecipeFromName(String mealName) {
-        // added by RArnold; uses "getRecipeData" to return a Recipe object based on the inputted "mealname" term
+        // added by RArnold; uses "getRecipeData" to return a recipe.Recipe object based on the inputted "mealname" term
         JSONObject mealData = (JSONObject) getRecipeData(mealName);
 
         String recipeName = mealData.get("strMeal").toString();
@@ -67,7 +69,7 @@ public class RecipeApiData {
     }
 
     public static Recipe getRandomRecipe() {
-        // added by RArnold; uses the "getRandomRecipeData" function to return a Recipe object for a random recipe 
+        // added by RArnold; uses the "getRandomRecipeData" function to return a recipe.Recipe object for a random recipe
         JSONObject mealData = (JSONObject) getRandomRecipeData();
 
         String recipeName = mealData.get("strMeal").toString();

@@ -1,10 +1,8 @@
+import recipe.Ingredient;
+import recipe.Recipe;
+
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Color;
-import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -51,7 +49,7 @@ public class RecipeTab extends TabFrameTemplate {
         header = new JPanel();
         
         // set sample recipe
-        // viewRecipe(new Recipe("", [], "", "", 0));
+        // viewRecipe(new recipe.Recipe("", [], "", "", 0));
         sampleRecipe();
 
         title = new JLabel(currentRecipe.getName());
@@ -164,8 +162,8 @@ public class RecipeTab extends TabFrameTemplate {
         // needs similar logic to the noteslist; a recipe shouldn't be savable once it's been saved(i.e. no duplicates)
         
         if (currentRecipe.isEmpty()) {
-            // System.out.println("Empty Recipe");
-            JOptionPane.showMessageDialog(mainPanel, "Empty Recipe.");
+            // System.out.println("Empty recipe.Recipe");
+            JOptionPane.showMessageDialog(mainPanel, "Empty recipe.Recipe.");
         } else {
            int foundRecipeIndex = -1;
            for (int i = 0; i < mainGUI.favoriteRecipes.size(); i++) {
@@ -183,8 +181,8 @@ public class RecipeTab extends TabFrameTemplate {
             else {
                 // recipe is already in the list; don't save
                 // probably should notify the user
-                JOptionPane.showMessageDialog(mainPanel, "Recipe already favorited.");
-                // System.out.println("Recipe already favorited");
+                JOptionPane.showMessageDialog(mainPanel, "recipe.Recipe already favorited.");
+                // System.out.println("recipe.Recipe already favorited");
             }
         }
 
@@ -194,7 +192,7 @@ public class RecipeTab extends TabFrameTemplate {
     public void sampleRecipe() {
         // source: https://www.inspiredtaste.net/38940/spaghetti-with-meat-sauce-recipe/
         String name = "Spaghetti";
-        // List<Ingredient> ingredients = Arrays.asList(new Ingredient("water"), new Ingredient("dry spaghetti noodles"), new Ingredient("salt"), new Ingredient("Ground Meat"), new Ingredient("Tomatoes"));
+        // List<recipe.Ingredient> ingredients = Arrays.asList(new recipe.Ingredient("water"), new recipe.Ingredient("dry spaghetti noodles"), new recipe.Ingredient("salt"), new recipe.Ingredient("Ground Meat"), new recipe.Ingredient("Tomatoes"));
         List<Ingredient> ingredients = Arrays.asList(new Ingredient("water"), new Ingredient("dry spaghetti noodles"), new Ingredient("salt"), new Ingredient("Ground Meat"), new Ingredient("Tomatoes"));
         // String instructions = "1 - Brown the meat: Heat the oil in a large pot over medium-high heat (we use a Dutch oven). Add the meat and cook until browned, about 8 minutes. Use a wooden spoon to break the meat into smaller crumbles as the meat cooks.\n";
         String instructions = "1 - Brown the meat: Heat the oil in a large pot over medium-high heat (we use a Dutch oven). Add the meat and cook until browned, about 8 minutes. Use a wooden spoon to break the meat into smaller crumbles as the meat cooks.\n" + //
