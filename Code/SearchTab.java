@@ -211,7 +211,7 @@ public class SearchTab extends TabFrameTemplate {
 
         JScrollPane pane = new JScrollPane(details);
         pane.setPreferredSize(new Dimension(400, 300));
-        JOptionPane.showMessageDialog(mainPanel, pane, " Recipe Details", JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showMessageDialog(mainPanel, pane, "Recipe Details", JOptionPane.PLAIN_MESSAGE);
     }
 
     private void chooseImage() {
@@ -229,6 +229,12 @@ public class SearchTab extends TabFrameTemplate {
     private void openNewRecipeTab() {
         mainGUI.switchTab(NEWRECIPETABINDEX);
         // GUIInterface.switchTab(NEWRECIPETABINDEX);
+    }
+
+    private void openRecipe() {
+        // GUIInterface.switchTab(NEWRECIPETABINDEX);
+        // selectedRecipe
+        mainGUI.switchTab(NEWRECIPETABINDEX);
     }
 
     public static void main(String args[]) {
