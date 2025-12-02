@@ -19,6 +19,7 @@ import javax.swing.border.TitledBorder;
 public class WelcomeTab extends TabFrameTemplate {
     private final Font titleFont = new Font("Segoe UI", Font.BOLD, 35);
     private final Font bodyFont = new Font("Segoe UI", Font.PLAIN, 15);
+    private final int RECIPETABINDEX = 2;;
     
     private CookItGUI mainGUI;
 
@@ -163,6 +164,6 @@ public class WelcomeTab extends TabFrameTemplate {
         Recipe selectedRecipe = RecipeApiData.getRandomRecipe();
 
         mainGUI.recipeTab.viewRecipe(selectedRecipe);
-        mainGUI.switchTab(2);
+        mainGUI.switchTab(RECIPETABINDEX);
     }
 }
