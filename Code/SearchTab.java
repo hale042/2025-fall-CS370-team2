@@ -227,6 +227,11 @@ public class SearchTab extends TabFrameTemplate {
         // GUIInterface.switchTab(NEWRECIPETABINDEX);
     }
 
+    private void openRecipe() {
+        mainGUI.switchTab(NEWRECIPETABINDEX);
+        // GUIInterface.switchTab(NEWRECIPETABINDEX);
+    }
+
     public static void main(String args[]) {
         // SearchTab gui = new SearchTab();
 
