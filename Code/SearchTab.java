@@ -29,6 +29,7 @@ import java.io.File;
 
 public class SearchTab extends TabFrameTemplate {
     final private int NEWRECIPETABINDEX = 4;
+    final private int RECIPETABINDEX = 2;
 
     private CookItGUI mainGUI;
     private JTextField ingredientField;
