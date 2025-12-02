@@ -19,6 +19,8 @@ public class WelcomeTab extends TabFrameTemplate {
     
     private CookItGUI mainGUI;
 
+    private final int RECIPETABINDEX = 2;
+
     // private String welcomeBlurb = "Welcome to CookIt! This is the \"How to\" / Welcome Blurb!";
     private String welcomeBlurb = "Welcome to CookIt! Go to the Search tab to enter ingredients you have to generate recipes you can make or select a recipe from the catalogue";
 
@@ -160,6 +162,6 @@ public class WelcomeTab extends TabFrameTemplate {
         Recipe selectedRecipe = RecipeApiData.getRandomRecipe();
 
         mainGUI.recipeTab.viewRecipe(selectedRecipe);
-        mainGUI.switchTab(2);
+        mainGUI.switchTab(RECIPETABINDEX);
     }
 }
