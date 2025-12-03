@@ -4,45 +4,50 @@ import appServer.*;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
+// import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
+// import javax.swing.JFileChooser;
 // import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+// import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.border.LineBorder;
+// import javax.swing.SwingConstants;
+// import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.Dimension;
+// import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Color;
-import java.awt.Image;
-
+// import java.awt.Color;
+// import java.awt.Image;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import java.io.File;
+// import java.io.File;
 
 public class SearchTab extends TabFrameTemplate {
     final private int NEWRECIPETABINDEX = 4;
+    final private int RECIPETABINDEX = 2;
 
     private CookItGUI mainGUI;
     private JTextField ingredientField;
     private JComboBox<String> skillFilter;
     private JComboBox<String> timeFilter;
-    private JTextArea resultArea;
-    private JButton searchButton, clearButton, viewButton, addImageButton, newRecipeButton;
-    private JLabel imageLabel;
+    // private JTextArea resultArea;
+    private JList<String> resultArea = new JList<>();
+    // private JButton searchButton, clearButton, viewButton, addImageButton, newRecipeButton;
+    private JButton searchButton, clearButton, viewButton, newRecipeButton;
+    // private JLabel imageLabel;
     private RecipeFinder finder;
     private Recipe selectedRecipe;
+    private List<Recipe> results;
 
     private Font tabFont = new Font("Segoe UI", Font.PLAIN, 13);
 
@@ -54,7 +59,6 @@ public class SearchTab extends TabFrameTemplate {
     public void initializeTabContents() {
         // super("Cook It!");
         finder = new RecipeFinder();
-        setupSampleData();  // temporary local data
 
         // Layout setup
         mainPanel.setLayout(new BorderLayout(10, 10));
@@ -85,8 +89,10 @@ public class SearchTab extends TabFrameTemplate {
         mainPanel.add(topPanel, BorderLayout.NORTH);
 
         // Center panel / search result panel 
-        resultArea = new JTextArea();
-        resultArea.setEditable(false);
+        // resultArea = new JTextArea();
+        // clearSearch();
+
+        // resultArea.setEditable(false);
         resultArea.setFont(tabFont);
         JScrollPane scrollPane = new JScrollPane(resultArea);
         scrollPane.setBorder(new TitledBorder("Matching Recipes"));
@@ -98,19 +104,19 @@ public class SearchTab extends TabFrameTemplate {
         rightPanel.setBorder(new TitledBorder("Recipe Details"));
 
         viewButton = new JButton("View Selected Recipe");
-        addImageButton = new JButton("Upload PNG");
-        imageLabel = new JLabel();
-        imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        imageLabel.setPreferredSize(new Dimension(200, 200));
-        imageLabel.setBorder(new LineBorder(Color.GRAY));
+        // addImageButton = new JButton("Upload PNG");
+        // imageLabel = new JLabel();
+        // imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        // imageLabel.setPreferredSize(new Dimension(200, 200));
+        // imageLabel.setBorder(new LineBorder(Color.GRAY));
         newRecipeButton = new JButton("New Recipe");
         
         rightPanel.add(viewButton);
         rightPanel.add(Box.createVerticalStrut(10));
-        rightPanel.add(addImageButton);
-        rightPanel.add(Box.createVerticalStrut(10));
-        rightPanel.add(imageLabel);
-        rightPanel.add(Box.createVerticalStrut(10));
+        // rightPanel.add(addImageButton);
+        // rightPanel.add(Box.createVerticalStrut(10));
+        // rightPanel.add(imageLabel);
+        // rightPanel.add(Box.createVerticalStrut(10));
         rightPanel.add(newRecipeButton);
 
         mainPanel.add(rightPanel, BorderLayout.EAST);
@@ -118,31 +124,38 @@ public class SearchTab extends TabFrameTemplate {
         //Event listeners for buttons
         searchButton.addActionListener(e -> findRecipes());
         clearButton.addActionListener(e -> clearSearch());
-        viewButton.addActionListener(e -> showRecipeDetails());
-        addImageButton.addActionListener(e -> chooseImage());
+        // viewButton.addActionListener(e -> showRecipeDetails());
+        viewButton.addActionListener(e -> openRecipe());
+        // addImageButton.addActionListener(e -> chooseImage());
         newRecipeButton.addActionListener(e -> openNewRecipeTab());
 
         // pack();
         // setLocationRelativeTo(null);
         // setVisible(true);
+        setupSampleData();  // temporary local data
     }
 
     // Sample data 
     private void setupSampleData() {
-        finder.addRecipe(new Recipe("Pancakes",
+        Recipe r1 = new Recipe("Pancakes",
                 Arrays.asList(new Ingredient("flour"), new Ingredient("egg"), new Ingredient("milk")),
                 "1. Mix ingredients.\n2. Fry on a pan until golden.\n3. Serve hot.",
-                "Beginner", 15));
-
-        finder.addRecipe(new Recipe("Scrambled Eggs",
+                "Beginner", 15);
+        Recipe r2 = new Recipe("Scrambled Eggs",
                 Arrays.asList(new Ingredient("egg"), new Ingredient("butter")),
                 "1. Whisk eggs.\n2. Melt butter.\n3. Stir until fluffy.",
-                "Beginner", 10));
-
-        finder.addRecipe(new Recipe("Beef Stir Fry",
+                "Beginner", 10);
+        Recipe r3 = new Recipe("Beef Stir Fry",
                 Arrays.asList(new Ingredient("beef"), new Ingredient("soy sauce"), new Ingredient("onion")),
                 "1. Slice beef and onions.\n2. Stir fry in soy sauce.\n3. Serve with rice.",
-                "Intermediate", 25));
+                "Intermediate", 25);
+
+        finder.addRecipe(r1);
+        finder.addRecipe(r2);
+        finder.addRecipe(r3);
+
+        results = Arrays.asList(r1, r2, r3);
+        displayResults();
     }
 
     // Core methods 
@@ -157,78 +170,107 @@ public class SearchTab extends TabFrameTemplate {
         String skill = skillFilter.getSelectedItem().toString();
         String time = timeFilter.getSelectedItem().toString();
 
-        List<Recipe> results = finder.findRecipes(inputList, skill, time);
-        displayResults(results);
+        results = finder.findRecipes(inputList, skill, time);
+        displayResults();
     }
 
-    private void displayResults(List<Recipe> results) {
-        resultArea.setText("");
+    private void displayResults() {
+        // resultArea.setText("");
         if (results.isEmpty()) {
-            resultArea.setText(" No recipes found with those ingredients or filters.");
+            // resultArea.setText(" No recipes found with those ingredients or filters.");
+            JOptionPane.showMessageDialog(mainPanel, "No recipes found with those ingredients or filters.");
         } else {
-            resultArea.append(" Recipes you can make:\n\n");
-            for (int i = 0; i < results.size(); i++) {
-                Recipe r = results.get(i);
-                resultArea.append((i + 1) + ". " + r.getName() +
-                        " (" + r.getSkillLevel() + ", " + r.getCookTime() + " min)\n");
-            }
+            // resultArea.append(" Recipes you can make:\n\n");
+            // for (int i = 0; i < results.size(); i++) {
+            //     Recipe r = results.get(i);
+            //     resultArea.append((i + 1) + ". " + r.getName() +
+            //             " (" + r.getSkillLevel() + ", " + r.getCookTime() + " min)\n");
+            // }
 
-            String choice = JOptionPane.showInputDialog("Enter recipe number to select:");
-            if (choice != null && !choice.isEmpty()) {
-                try {
-                    int index = Integer.parseInt(choice) - 1;
-                    if (index >= 0 && index < results.size()) {
-                        selectedRecipe = results.get(index);
-                        JOptionPane.showMessageDialog(mainPanel, "Selected: " + selectedRecipe.getName());
-                    }
-                } catch (NumberFormatException ignored) {}
+            // String choice = JOptionPane.showInputDialog("Enter recipe number to select:");
+            // if (choice != null && !choice.isEmpty()) {
+            //     try {
+            //         int index = Integer.parseInt(choice) - 1;
+            //         if (index >= 0 && index < results.size()) {
+            //             selectedRecipe = results.get(index);
+            //             JOptionPane.showMessageDialog(mainPanel, "Selected: " + selectedRecipe.getName());
+            //         }
+            //     } catch (NumberFormatException ignored) {}
+            // }
+
+            List<String> temp = new ArrayList<String>();
+            for (Recipe recipe : results) {
+                temp.add(recipe.getName());
             }
+            String recipeNames[] = temp.toArray(new String[temp.size()]);
+            resultArea.setListData(recipeNames);
         }
     }
 
     private void clearSearch() {
         ingredientField.setText("");
-        resultArea.setText("");
+        // resultArea.setText("");
+
+        String temp[] = {};
+        resultArea.setListData(temp);
+
         selectedRecipe = null;
-        imageLabel.setIcon(null);
+        // imageLabel.setIcon(null);
     }
 
-    private void showRecipeDetails() {
-        if (selectedRecipe == null) {
-            JOptionPane.showMessageDialog(mainPanel, "Please select a recipe first.");
-            return;
-        }
+    // private void showRecipeDetails() {
+    //     if (selectedRecipe == null) {
+    //         JOptionPane.showMessageDialog(mainPanel, "Please select a recipe first.");
+    //         return;
+    //     }
 
-        JTextArea details = new JTextArea(
-                "🍽️ " + selectedRecipe.getName() + "\n\n" +
-                "Skill: " + selectedRecipe.getSkillLevel() + "\n" +
-                "Cook Time: " + selectedRecipe.getCookTime() + " minutes\n\n" +
-                "Ingredients:\n" + selectedRecipe.getIngredientList() + "\n\n" +
-                "Instructions:\n" + selectedRecipe.getInstructions()
-        );
-        details.setEditable(false);
-        details.setCaretPosition(0);
+    //     JTextArea details = new JTextArea(
+    //             "🍽️ " + selectedRecipe.getName() + "\n\n" +
+    //             "Skill: " + selectedRecipe.getSkillLevel() + "\n" +
+    //             "Cook Time: " + selectedRecipe.getCookTime() + " minutes\n\n" +
+    //             "Ingredients:\n" + selectedRecipe.getIngredientList() + "\n\n" +
+    //             "Instructions:\n" + selectedRecipe.getInstructions()
+    //     );
+    //     details.setEditable(false);
+    //     details.setCaretPosition(0);
 
-        JScrollPane pane = new JScrollPane(details);
-        pane.setPreferredSize(new Dimension(400, 300));
-        JOptionPane.showMessageDialog(mainPanel, pane, "Recipe Details", JOptionPane.PLAIN_MESSAGE);
-    }
+    //     JScrollPane pane = new JScrollPane(details);
+    //     pane.setPreferredSize(new Dimension(400, 300));
+    //     JOptionPane.showMessageDialog(mainPanel, pane, "Recipe Details", JOptionPane.PLAIN_MESSAGE);
+    // }
 
-    private void chooseImage() {
-        JFileChooser chooser = new JFileChooser();
-        chooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("PNG Images", "png"));
-        int result = chooser.showOpenDialog(mainPanel);
-        if (result == JFileChooser.APPROVE_OPTION) {
-            File file = chooser.getSelectedFile();
-            ImageIcon icon = new ImageIcon(file.getAbsolutePath());
-            Image scaled = icon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-            imageLabel.setIcon(new ImageIcon(scaled));
-        }
-    }
+    // private void chooseImage() {
+    //     JFileChooser chooser = new JFileChooser();
+    //     chooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("PNG Images", "png"));
+    //     int result = chooser.showOpenDialog(mainPanel);
+    //     if (result == JFileChooser.APPROVE_OPTION) {
+    //         File file = chooser.getSelectedFile();
+    //         ImageIcon icon = new ImageIcon(file.getAbsolutePath());
+    //         Image scaled = icon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+    //         imageLabel.setIcon(new ImageIcon(scaled));
+    //     }
+    // }
 
     private void openNewRecipeTab() {
         mainGUI.switchTab(NEWRECIPETABINDEX);
         // GUIInterface.switchTab(NEWRECIPETABINDEX);
+    }
+
+    private void openRecipe() {
+        selectedRecipe = new Recipe();
+        
+        int recipeIndex = resultArea.getSelectedIndex();
+
+        if (recipeIndex == -1) {
+            JOptionPane.showMessageDialog(mainPanel, "Please select a recipe first.");
+        }
+        else {
+            selectedRecipe = results.get(recipeIndex);
+
+            mainGUI.recipeTab.viewRecipe(selectedRecipe);
+            mainGUI.switchTab(RECIPETABINDEX);
+        }
+
     }
 
     public static void main(String args[]) {
