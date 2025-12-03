@@ -1,3 +1,4 @@
+import appServer.RecipeFinder;
 import dataAccess.File_Manager;
 import recipe.Ingredient;
 import recipe.Recipe;
@@ -139,8 +140,8 @@ public class NewRecipeTab extends TabFrameTemplate {
         // Recipe recipe = new Recipe(recipeName, ingredients, instructionsString, recipeSkill, recipeTime); // figure out the time thing
         // System.out.println(newRecipe.getName());
 
-        File_Manager fm = new File_Manager();
-        fm.saveRecipe(recipeToSave);
+        RecipeFinder finder = new RecipeFinder();
+        finder.addRecipe(recipeToSave);
         // do a try on the save function? give a popup if error, else signal success and go back to search page
         mainGUI.switchTab(SEARCHTABINDEX); // switch back to the recipe search page
     }
