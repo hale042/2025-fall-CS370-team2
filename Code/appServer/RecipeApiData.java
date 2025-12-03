@@ -9,9 +9,7 @@ import recipe.Recipe;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class RecipeApiData {
     public static void main(String[] args){
@@ -81,7 +79,15 @@ public class RecipeApiData {
         String instructions = mealData.get("strInstructions").toString();
         
         // System.out.println(recipeName + " - " + instructions);
-        Recipe recipe = new Recipe(recipeName, ingredients, instructions, "null", 0);
+
+        List<String> myList = Arrays.asList("Beginner", "Intermediate", "Expert");
+        Random r = new Random();
+        int randomItem = r.nextInt(myList.size());
+        String randomElement = myList.get(randomItem);
+
+
+        Recipe recipe = new Recipe(recipeName, ingredients, instructions, randomElement, r.nextInt(20) * 5);
+
         return recipe;
     }
 
@@ -223,7 +229,7 @@ public class RecipeApiData {
 
             //loop through every line and append to stringbuilder
             while (scanner.hasNext()) {
-                resultJson.append(scanner.next());
+                resultJson.append(scanner.nextLine());
             }
 
             //close
