@@ -40,11 +40,8 @@ public class SearchTab extends TabFrameTemplate {
     private JTextField ingredientField;
     private JComboBox<String> skillFilter;
     private JComboBox<String> timeFilter;
-    // private JTextArea resultArea;
     private JList<String> resultArea = new JList<>();
-    // private JButton searchButton, clearButton, viewButton, addImageButton, newRecipeButton;
     private JButton searchButton, clearButton, viewButton, newRecipeButton;
-    // private JLabel imageLabel;
     private RecipeFinder finder;
     private Recipe selectedRecipe;
     private List<Recipe> results;
@@ -89,10 +86,7 @@ public class SearchTab extends TabFrameTemplate {
         mainPanel.add(topPanel, BorderLayout.NORTH);
 
         // Center panel / search result panel 
-        // resultArea = new JTextArea();
         // clearSearch();
-
-        // resultArea.setEditable(false);
         resultArea.setFont(tabFont);
         JScrollPane scrollPane = new JScrollPane(resultArea);
         scrollPane.setBorder(new TitledBorder("Matching Recipes"));
@@ -104,19 +98,10 @@ public class SearchTab extends TabFrameTemplate {
         rightPanel.setBorder(new TitledBorder("Recipe Details"));
 
         viewButton = new JButton("View Selected Recipe");
-        // addImageButton = new JButton("Upload PNG");
-        // imageLabel = new JLabel();
-        // imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        // imageLabel.setPreferredSize(new Dimension(200, 200));
-        // imageLabel.setBorder(new LineBorder(Color.GRAY));
         newRecipeButton = new JButton("New Recipe");
         
         rightPanel.add(viewButton);
         rightPanel.add(Box.createVerticalStrut(10));
-        // rightPanel.add(addImageButton);
-        // rightPanel.add(Box.createVerticalStrut(10));
-        // rightPanel.add(imageLabel);
-        // rightPanel.add(Box.createVerticalStrut(10));
         rightPanel.add(newRecipeButton);
 
         mainPanel.add(rightPanel, BorderLayout.EAST);
@@ -132,7 +117,7 @@ public class SearchTab extends TabFrameTemplate {
         // pack();
         // setLocationRelativeTo(null);
         // setVisible(true);
-        setupSampleData();  // temporary local data
+        // setupSampleData();  // temporary local data
     }
 
     // Sample data 
@@ -177,27 +162,8 @@ public class SearchTab extends TabFrameTemplate {
     private void displayResults() {
         // resultArea.setText("");
         if (results.isEmpty()) {
-            // resultArea.setText(" No recipes found with those ingredients or filters.");
             JOptionPane.showMessageDialog(mainPanel, "No recipes found with those ingredients or filters.");
         } else {
-            // resultArea.append(" Recipes you can make:\n\n");
-            // for (int i = 0; i < results.size(); i++) {
-            //     Recipe r = results.get(i);
-            //     resultArea.append((i + 1) + ". " + r.getName() +
-            //             " (" + r.getSkillLevel() + ", " + r.getCookTime() + " min)\n");
-            // }
-
-            // String choice = JOptionPane.showInputDialog("Enter recipe number to select:");
-            // if (choice != null && !choice.isEmpty()) {
-            //     try {
-            //         int index = Integer.parseInt(choice) - 1;
-            //         if (index >= 0 && index < results.size()) {
-            //             selectedRecipe = results.get(index);
-            //             JOptionPane.showMessageDialog(mainPanel, "Selected: " + selectedRecipe.getName());
-            //         }
-            //     } catch (NumberFormatException ignored) {}
-            // }
-
             List<String> temp = new ArrayList<String>();
             for (Recipe recipe : results) {
                 temp.add(recipe.getName());
@@ -209,51 +175,15 @@ public class SearchTab extends TabFrameTemplate {
 
     private void clearSearch() {
         ingredientField.setText("");
-        // resultArea.setText("");
 
         String temp[] = {};
         resultArea.setListData(temp);
 
         selectedRecipe = null;
-        // imageLabel.setIcon(null);
     }
-
-    // private void showRecipeDetails() {
-    //     if (selectedRecipe == null) {
-    //         JOptionPane.showMessageDialog(mainPanel, "Please select a recipe first.");
-    //         return;
-    //     }
-
-    //     JTextArea details = new JTextArea(
-    //             "🍽️ " + selectedRecipe.getName() + "\n\n" +
-    //             "Skill: " + selectedRecipe.getSkillLevel() + "\n" +
-    //             "Cook Time: " + selectedRecipe.getCookTime() + " minutes\n\n" +
-    //             "Ingredients:\n" + selectedRecipe.getIngredientList() + "\n\n" +
-    //             "Instructions:\n" + selectedRecipe.getInstructions()
-    //     );
-    //     details.setEditable(false);
-    //     details.setCaretPosition(0);
-
-    //     JScrollPane pane = new JScrollPane(details);
-    //     pane.setPreferredSize(new Dimension(400, 300));
-    //     JOptionPane.showMessageDialog(mainPanel, pane, "Recipe Details", JOptionPane.PLAIN_MESSAGE);
-    // }
-
-    // private void chooseImage() {
-    //     JFileChooser chooser = new JFileChooser();
-    //     chooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("PNG Images", "png"));
-    //     int result = chooser.showOpenDialog(mainPanel);
-    //     if (result == JFileChooser.APPROVE_OPTION) {
-    //         File file = chooser.getSelectedFile();
-    //         ImageIcon icon = new ImageIcon(file.getAbsolutePath());
-    //         Image scaled = icon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-    //         imageLabel.setIcon(new ImageIcon(scaled));
-    //     }
-    // }
 
     private void openNewRecipeTab() {
         mainGUI.switchTab(NEWRECIPETABINDEX);
-        // GUIInterface.switchTab(NEWRECIPETABINDEX);
     }
 
     private void openRecipe() {
@@ -273,14 +203,5 @@ public class SearchTab extends TabFrameTemplate {
 
     }
 
-    public static void main(String args[]) {
-        // SearchTab gui = new SearchTab();
-
-        // //Schedule a job for the event-dispatching thread("Swing data structures aren't thread-safe")
-        // javax.swing.SwingUtilities.invokeLater(new Runnable() {
-        //     public void run() {
-        //         System.out.println(gui.getAsPanel());
-        //     }
-        // });
-    }
+    public static void main(String args[]) {}
 }
