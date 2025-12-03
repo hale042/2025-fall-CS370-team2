@@ -46,7 +46,12 @@ public class Database_Manager {
         }
         if(isTableEmpty()) {
             RecipeApiData recipeApiData = new RecipeApiData();
-            for(int i=0; i<100; i++) this.saveRecipe(RecipeApiData.getRandomRecipe());
+            System.out.print("Populating Database: ");
+            for(int i=0; i<100; i++) {
+                this.saveRecipe(RecipeApiData.getRandomRecipe());
+                if(i%10 == 0) System.out.print("#");
+            }
+            System.out.println();
         }
     }
     public Database_Manager(String t) {
