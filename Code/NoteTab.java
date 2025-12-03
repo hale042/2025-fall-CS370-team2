@@ -65,12 +65,12 @@ public class NoteTab extends TabFrameTemplate {
         // note editing/viewing interface
         noteEditorPanel = new JPanel();
         noteEditorPanel.setLayout(new BorderLayout(10, 10));
-        noteEditorPanel.setBorder(new TitledBorder("Current note.Note"));
+        noteEditorPanel.setBorder(new TitledBorder("Current Note"));
         
         // title
         noteTitleField = new JTextField();
         noteTitleField.setFont(pageFont);
-        noteTitleField.setToolTipText("note.Note Title");
+        noteTitleField.setToolTipText("Note Title");
         noteEditorPanel.add(noteTitleField, BorderLayout.NORTH);
 
         // contents
@@ -82,7 +82,7 @@ public class NoteTab extends TabFrameTemplate {
         // save, cancel, etc. buttons
         noteControlsPanel = new JPanel(new FlowLayout());
 
-        JButton saveButton = new JButton("Save note.Note");
+        JButton saveButton = new JButton("Save Note");
         JButton clearButton = new JButton("Clear");
 
         noteControlsPanel.add(saveButton);
@@ -123,7 +123,7 @@ public class NoteTab extends TabFrameTemplate {
 
         if (currentNote.isEmpty()) {
             // System.out.println("Empty note.Note");
-            JOptionPane.showMessageDialog(mainPanel, "Empty note.Note.");
+            JOptionPane.showMessageDialog(mainPanel, "Empty Note.");
         } else {
             // System.out.println(currentNote.title + " - " + currentNote.title.length());
 
