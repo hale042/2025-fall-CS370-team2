@@ -258,15 +258,15 @@ public class Database_Manager {
     }
 
     private List<Ingredient> ingredientsToList(String ingredients) {
-        List<String> list = new ArrayList<>(List.of(ingredients.split(" ")));
+        List<String> list = new ArrayList<>(List.of(ingredients.split(", ")));
         List<Ingredient> ingredientList = new ArrayList<>();
-        for(String ing : list) ingredientList.add(new Ingredient(ing.replaceAll("_", " ")));
+        for(String ing : list) ingredientList.add(new Ingredient(ing));
         return ingredientList;
     }
     private String ingredientsToString(List<Ingredient> ingredients) {
         StringBuilder sb = new StringBuilder();
         for (Ingredient ing : ingredients) {
-            sb.append(ing.getName().replaceAll(" ", "_")).append(" ");
+            sb.append(ing.getName()).append(", ");
         }
         return sb.toString();
     }

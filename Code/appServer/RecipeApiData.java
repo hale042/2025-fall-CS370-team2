@@ -73,8 +73,10 @@ public class RecipeApiData {
         JSONObject mealData = (JSONObject) getRandomRecipeData();
 
         String recipeName = mealData.get("strMeal").toString();
-        // List<String> ingredients = extractIngredients(mealData);
-        List<Ingredient> ingredients = stringToIngredientsList(extractIngredients(mealData));;
+        List<String> ingredients = extractIngredients(mealData);
+        List<Ingredient> ingredientList =new ArrayList<>();
+        for(String ing : ingredients) ingredientList.add(new Ingredient(ing));
+        //List<Ingredient> ingredients = stringToIngredientsList(extractIngredients(mealData));;
         // String category = mealData.get("strCategory").toString();
         String instructions = mealData.get("strInstructions").toString();
         
@@ -86,7 +88,7 @@ public class RecipeApiData {
         String randomElement = myList.get(randomItem);
 
 
-        Recipe recipe = new Recipe(recipeName, ingredients, instructions, randomElement, r.nextInt(20) * 5);
+        Recipe recipe = new Recipe(recipeName, ingredientList, instructions, randomElement, r.nextInt(20) * 5);
 
         return recipe;
     }

@@ -178,13 +178,16 @@ public class RecipeTab extends TabFrameTemplate {
             if (foundRecipeIndex == -1) { // if we didn't find a duplicate recipe, add it to the list
                 mainGUI.favoriteRecipes.add(currentRecipe);
                 mainGUI.welcomeTab.updateFavoritesList();
+                File_Manager fm = new File_Manager();
+                fm.saveRecipe(currentRecipe);
+
             }
             else {
                 // recipe is already in the list; don't save
                 // probably should notify the user
                 JOptionPane.showMessageDialog(mainPanel, "Recipe already favorited.");
                 // System.out.println("Recipe already favorited");
-            }
+             }
         }
 
         // favorite recipes list will also have to be saved in the file system or the database or whatever

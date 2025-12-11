@@ -1,3 +1,4 @@
+import dataAccess.File_Manager;
 import note.Note;
 
 import javax.swing.JPanel;
@@ -26,7 +27,7 @@ public class NoteTab extends TabFrameTemplate {
 
     // private String savedNotes[] = {"Shopping List", "Sandwich Ideas", "Add-Ins For That One Salad", "Foods to try", "test5", "test6"};
     // private note.Note savedNotes[] = {new note.Note("Shopping List", " - cabbage\n - apples\n - a half gallon of milk"), new note.Note("Sandwich Ideas", ""), new note.Note("Add-Ins For That One Salad", ""), new note.Note("Foods to try", ""), new note.Note("test5", ""), new note.Note("test6", "")};
-    private List<Note> savedNotes = new ArrayList<Note>(Arrays.asList(new Note("Shopping List", " - cabbage\n - apples\n - a half gallon of milk"), new Note("Sandwich Ideas", ""), new Note("Add-Ins For That One Salad", ""), new Note("Foods to try", ""), new Note("test5", ""), new Note("test6", "")));
+    private List<Note> savedNotes = new ArrayList<Note>(Arrays.asList(new Note("Shopping List", " - cabbage\n - apples\n - a half gallon of milk")));
     private Note currentNote;
 
     private JList<String> notesList = new JList<>();
@@ -41,6 +42,8 @@ public class NoteTab extends TabFrameTemplate {
         notesListPanel.setBorder(new TitledBorder("Notes"));
         
         // JList<String> notesList = new JList<String>(savedNotes);
+        File_Manager fm = new File_Manager();
+        savedNotes.addAll(fm.fetchNotesList());
         setNoteList(savedNotes);
         notesList.setFont(pageFont);
         // notesListPanel.add(notesList, BorderLayout.CENTER);
@@ -140,7 +143,7 @@ public class NoteTab extends TabFrameTemplate {
                     foundNoteIndex = i;
                 }
             }
-    
+
             if (foundNoteIndex == -1) { // if we didn't find a note with the same name, save the note
                 savedNotes.add(currentNote);
                 setNoteList(savedNotes);
@@ -151,6 +154,9 @@ public class NoteTab extends TabFrameTemplate {
             else { // if we find a note with the same name, overwrite its contents with the current one
                 savedNotes.set(foundNoteIndex, currentNote);
             }
+
+            File_Manager fm = new File_Manager();
+            fm.saveNote(currentNote.title, currentNote.contents);
         }
     }
 
@@ -171,6 +177,8 @@ public class NoteTab extends TabFrameTemplate {
             JOptionPane.showMessageDialog(mainPanel, "Please select a note.");
         }
         else {
+            File_Manager fm = new File_Manager();
+            fm.deleteNote(savedNotes.get(noteIndex).title);
             savedNotes.remove(noteIndex);
             setNoteList(savedNotes);
         }

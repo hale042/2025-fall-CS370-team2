@@ -1,4 +1,6 @@
 import appServer.RecipeApiData;
+import appServer.RecipeFinder;
+import dataAccess.File_Manager;
 import recipe.Recipe;
 
 import java.awt.BorderLayout;
@@ -64,6 +66,10 @@ public class WelcomeTab extends TabFrameTemplate {
         mainPanel.add(blurbPanel);
 
         // list of favorite recipes
+        File_Manager fm = new File_Manager();
+        List<Recipe> favorites = fm.fetchRecipeList();
+        mainGUI.favoriteRecipes.addAll(favorites);
+
         favoritesPanel = new JPanel(new BorderLayout(10, 10));
         favoritesPanel.setBorder(new TitledBorder("Your Favorite Recipes"));
 
@@ -72,11 +78,12 @@ public class WelcomeTab extends TabFrameTemplate {
         noFavoritesLabel.setHorizontalAlignment(JLabel.CENTER);
         noFavoritesLabel.setVisible(true);
         
-        updateFavoritesList();
+
         favoritesJList.setFont(bodyFont);
 
         scrollableFavorites = new JScrollPane(favoritesJList); // make it scrollable
         scrollableFavorites.setVisible(false);
+        updateFavoritesList();
 
         // buttons
         buttonsPanel = new JPanel();
@@ -105,6 +112,7 @@ public class WelcomeTab extends TabFrameTemplate {
     public void updateFavoritesList() {
         // savedNotes = Notes;
         // mainGUI.favoriteRecipes
+
 
         // if there are no recipes in the list, notify the user with a label
         if (mainGUI.favoriteRecipes.isEmpty()) {
@@ -138,6 +146,8 @@ public class WelcomeTab extends TabFrameTemplate {
             JOptionPane.showMessageDialog(this.mainPanel, "No Recipe Selected.");
         }
         else {
+            File_Manager fm = new File_Manager();
+            fm.deleteRecipe(mainGUI.favoriteRecipes.get(recipeIndex));
             mainGUI.favoriteRecipes.remove(recipeIndex);
             updateFavoritesList();
         }
@@ -162,6 +172,9 @@ public class WelcomeTab extends TabFrameTemplate {
         
         // get random recipe from API call
         Recipe selectedRecipe = RecipeApiData.getRandomRecipe();
+
+        RecipeFinder finder = new RecipeFinder();
+        finder.addRecipe(selectedRecipe);
 
         mainGUI.recipeTab.viewRecipe(selectedRecipe);
         mainGUI.switchTab(RECIPETABINDEX);
