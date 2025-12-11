@@ -5,16 +5,20 @@ import recipe.*;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class File_Manager {
     private final File SAVED_RECIPES;
     String path;
     public File_Manager() {
-        path = "./Code/Resources/";
-        SAVED_RECIPES = new File(path, "recipes.txt");
+        path = "./Resources/";
+        File directory = new File(path);
+
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+
+        SAVED_RECIPES = new File(directory, "recipes.txt");
         try {
             SAVED_RECIPES.createNewFile();
         } catch (IOException e) {
@@ -35,6 +39,10 @@ public class File_Manager {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+
+        if(recipeNames.isEmpty()) {
+            return new ArrayList<>();
         }
 
         Database_Manager db = new Database_Manager();
